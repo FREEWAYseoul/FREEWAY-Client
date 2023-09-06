@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import localFont from 'next/font/local';
 
+import LayoutWrapper from '../common/LayoutWrapper';
 import StyledComponentsRegistry from '../lib/registry';
 import GlobalStyle from '../styles/global';
 
@@ -18,8 +19,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html>
       <body className={Pretendard.className}>
         <StyledComponentsRegistry>
-          <GlobalStyle />
-          {children}
+          <LayoutWrapper>
+            <GlobalStyle />
+            {children}
+          </LayoutWrapper>
         </StyledComponentsRegistry>
       </body>
     </html>

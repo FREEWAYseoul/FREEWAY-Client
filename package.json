@@ -13,9 +13,11 @@
     "build-storybook": "storybook build -s public"
   },
   "dependencies": {
+    "lottie-react": "^2.4.0",
     "next": "13.4.19",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-speech-recognition": "^3.10.0",
     "styled-reset": "^4.5.1"
   },
   "devDependencies": {
@@ -27,9 +29,11 @@
     "@storybook/nextjs": "^7.4.0",
     "@storybook/react": "^7.4.0",
     "@storybook/testing-library": "^0.2.0",
+    "@svgr/webpack": "^8.1.0",
     "@types/node": "^20.5.9",
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
+    "@types/react-speech-recognition": "^3.9.2",
     "@types/styled-components": "^5.1.26",
     "@typescript-eslint/eslint-plugin": "^6.6.0",
     "@typescript-eslint/parser": "^6.6.0",
