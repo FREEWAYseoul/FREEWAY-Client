@@ -1,17 +1,15 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { StationProps } from '@/types/stationType';
 
 const SEARCH_HISTORY = 'search-history';
 
-const sliceList = (data: StationProps[]) => {
-  return data.slice(-4);
-};
-
 const useLocalStorage = () => {
-  const [searchHistory] = useState<StationProps[]>(
-    sliceList(JSON.parse(localStorage.getItem(SEARCH_HISTORY) ?? '[]')).reverse(),
-  );
+  const [searchHistory, setSearchHistory] = useState<StationProps[]>([]);
+
+  const sliceList = (data: StationProps[]) => {
+    return data.slice(-4);
+  };
 
   const removeDuplication = (selectedStationInfo: StationProps, data: StationProps[]) => {
     return data.filter((station) => station.stationId !== selectedStationInfo.stationId);
@@ -26,6 +24,11 @@ const useLocalStorage = () => {
     const newData = [...dataWithoutDuplication, selectedStationInfo];
 
     localStorage.setItem(SEARCH_HISTORY, JSON.stringify(sliceList(newData)));
+  }, []);
+
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem(SEARCH_HISTORY) ?? '[]');
+    setSearchHistory(sliceList(data).reverse());
   }, []);
 
   return { searchHistory, addSearchHistory };

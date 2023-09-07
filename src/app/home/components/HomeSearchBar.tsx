@@ -51,9 +51,8 @@ const StyledHomeSearchBar = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0px 12.21px;
+  padding-right: 12px;
 
-  height: 75px;
   background: #ffffff;
   border: 1.5px solid #316bff;
   box-shadow: 0px 0px 13.3333px rgba(68, 81, 69, 0.1);

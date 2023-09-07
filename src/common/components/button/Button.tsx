@@ -1,18 +1,19 @@
 'use client';
 
 import React, { PropsWithChildren } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 interface Props extends PropsWithChildren {
   width?: number;
   height?: number;
   color?: string;
+  hover?: boolean;
   handleOnClick?: () => void;
 }
 
-const Button = ({ width, height, handleOnClick, children }: Props) => {
+const Button = ({ width, height, hover, handleOnClick, children }: Props) => {
   return (
-    <StyledButton style={{ width, height }} onClick={handleOnClick}>
+    <StyledButton style={{ width, height }} $isHover={!!hover} onClick={handleOnClick}>
       {children}
     </StyledButton>
   );
@@ -20,9 +21,8 @@ const Button = ({ width, height, handleOnClick, children }: Props) => {
 
 export default Button;
 
-const StyledButton = styled.button`
+const StyledButton = styled.button<{ $isHover: boolean }>`
   cursor: pointer;
-  position: relative;
 
   display: flex;
   justify-content: center;
@@ -32,10 +32,14 @@ const StyledButton = styled.button`
   margin: 0;
 
   border: none;
-  background-color: #fff;
+  background: none;
 
-  transition: 0.2s ease-in-out;
-  &:hover {
-    transform: scale(1.1);
-  }
+  ${({ $isHover }) =>
+    $isHover &&
+    css`
+      transition: 0.2s ease-in-out;
+      &:hover {
+        transform: scale(1.1);
+      }
+    `}
 `;

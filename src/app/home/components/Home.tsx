@@ -48,7 +48,7 @@ export default Home;
 const HomeWrapper = styled.div`
   width: 100%;
   height: 100%;
-  padding: 0 24px;
+  padding: 0 20px;
 `;
 
 const ChildrenWrapper = styled.div`

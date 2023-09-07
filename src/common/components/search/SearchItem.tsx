@@ -43,7 +43,7 @@ const SearchItem = ({ name, status, id, line, isFocus, type }: SearchItemProps) 
       <SearchItemLeftSection>
         <Text>
           {name.split('').map((c, idx) => (
-            <Char key={idx} isKeyword={isKeyword(c)} type={type}>
+            <Char key={idx} $isKeyword={isKeyword(c)} $type={type}>
               {c}
             </Char>
           ))}
@@ -60,7 +60,9 @@ const SearchItem = ({ name, status, id, line, isFocus, type }: SearchItemProps) 
 export default SearchItem;
 
 const SearchItemWrapper = styled.li<{ isFocus?: boolean; type?: 'homepage' | 'searchpage' }>`
+  cursor: pointer;
   margin-bottom: 5px;
+  padding-right: 9px;
 
   width: 100%;
   height: 43px;
@@ -68,7 +70,6 @@ const SearchItemWrapper = styled.li<{ isFocus?: boolean; type?: 'homepage' | 'se
   display: flex;
   align-items: center;
   justify-content: space-between;
-  cursor: pointer;
   &:hover {
     background-color: #edf5f5;
     cursor: pointer;
@@ -92,9 +93,9 @@ const Text = styled.div`
   margin-right: 6px;
 `;
 
-const Char = styled.span<{ isKeyword?: boolean; type?: 'homepage' | 'searchpage' }>`
-  color: ${(props) => (props.isKeyword ? 'rgba(73, 80, 116, 1)' : 'rgba(73, 80, 116, 0.5)')};
-  color: ${(props) => props.type === 'homepage' && 'rgba(73, 80, 116, 1)'};
+const Char = styled.span<{ $isKeyword?: boolean; $type?: 'homepage' | 'searchpage' }>`
+  color: ${({ $isKeyword }) => ($isKeyword ? 'rgba(73, 80, 116, 1)' : 'rgba(73, 80, 116, 0.5)')};
+  color: ${({ $type }) => $type === 'homepage' && 'rgba(73, 80, 116, 1)'};
 `;
 
 const Status = styled.div<StyledStatusProps>`
