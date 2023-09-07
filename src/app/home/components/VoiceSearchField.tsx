@@ -3,7 +3,7 @@
 import Lottie from 'lottie-react';
 import styled from 'styled-components';
 
-import MicIcon from '@/assets/icons/home-mic-icon.svg';
+import MicIcon from '@/assets/icons/mic-icon.svg';
 import animationDatan from '@/assets/lotties/purse.json';
 
 type Props = {
@@ -20,7 +20,7 @@ const VoiceSearchField = ({ keywords }: Props) => {
         ) : (
           <VoiceSearchText keywords={keywords}>듣고 있어요</VoiceSearchText>
         )}
-        <MicIcon />
+        <MicIcon style={{ color: '#fff' }} />
       </MicContainer>
     </VoiceSearchWrapper>
   );
