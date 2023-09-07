@@ -2,8 +2,8 @@ import { Metadata } from 'next';
 import localFont from 'next/font/local';
 
 import LayoutWrapper from '../common/LayoutWrapper';
-import StyledComponentsRegistry from '../lib/registry';
 import GlobalStyle from '../styles/global';
+import StyledComponentsRegistry from './registry';
 
 export const metadata: Metadata = {
   title: 'FREEWAY',
