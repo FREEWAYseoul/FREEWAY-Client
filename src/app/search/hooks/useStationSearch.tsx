@@ -82,7 +82,7 @@ const useStationSearch = () => {
         const selectedStation = selectStationByKeywords(keywords);
         if (!selectedStation) return;
         saveStation(selectedStation);
-        route.push('/result');
+        route.push('/subway');
       }
     },
     [inputRef, filteredStations.length, selectStationByKeywords, keywords, saveStation, route],

@@ -28,14 +28,26 @@ const VoiceSearchField = ({ keywords }: Props) => {
 
 export default VoiceSearchField;
 
+// const VoiceSearchWrapper = styled.div`
+//   position: relative;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   width: 100%;
+//   height: 372px;
+//   top: 10%;
+// `;
+
 const VoiceSearchWrapper = styled.div`
-  position: relative;
+  position: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
+  max-width: 500px;
+  min-width: 500px;
   width: 100%;
   height: 372px;
-  top: 10%;
+  bottom: -80px;
 `;
 
 const MicContainer = styled.div`

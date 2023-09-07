@@ -42,7 +42,7 @@ const useStationSpeech = () => {
         alert('일치하는 역이 없습니다. 다시 한 번 말씀해주세요.');
         return;
       }
-      route.push('/result');
+      route.push('/subway');
     }
   }, [keywords, listening, route, stations]);
 
