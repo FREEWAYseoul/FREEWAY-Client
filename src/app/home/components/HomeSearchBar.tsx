@@ -1,7 +1,7 @@
 import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
 
-import MicIcon from '@/assets/icons/home-mic-icon.svg';
+import MicIcon from '@/assets/icons/mic-icon.svg';
 import SoundWaveIcon from '@/assets/icons/sound-wave.svg';
 import CircleButton from '@/common/components/button/CircleButton';
 

@@ -2,7 +2,7 @@
 
 import styled from 'styled-components';
 
-import useSpeech from '../hooks/useSpeech';
+import useSpeech from '../hooks/useStationSpeech';
 // import useLocalStorage from '../../../hooks/useLocalStorage';
 // import useMic from '../../../hooks/useMic';
 import HomeHeader from './HomeHeader';
@@ -31,7 +31,7 @@ const Home = () => {
     <HomeWrapper id='home-container'>
       <HomeHeader />
       <HomePageTitle />
-      <HomeSearchBar handleClick={handleClick} isListening={false} />
+      <HomeSearchBar handleClick={handleClick} isListening={listening} />
       <ChildrenWrapper>
         {listening ? <VoiceSearchField keywords={keywords} /> : <HomeSearchHistoryList />}
       </ChildrenWrapper>
