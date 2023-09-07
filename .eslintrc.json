@@ -3,8 +3,8 @@
     "next/core-web-vitals",
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
-    "prettier",
-    "plugin:storybook/recommended"
+    "plugin:storybook/recommended",
+    "prettier"
   ],
   "plugins": [
     "eslint-plugin-simple-import-sort",
@@ -34,17 +34,8 @@
       }
     ],
     "react/jsx-first-prop-new-line": "error",
-    "comma-dangle": [
-      "error",
-      {
-        "arrays": "always-multiline",
-        "objects": "always-multiline",
-        "imports": "never",
-        "exports": "never",
-        "functions": "never"
-      }
-    ],
-    "indent": ["error", 2],
+    "comma-dangle": "off",
+    "indent": "off",
     "quotes": ["error", "single"],
     "eol-last": "error",
     "semi": ["error", "always"],
