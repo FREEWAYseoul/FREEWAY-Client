@@ -4,11 +4,14 @@ import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
+import { useStation } from '@/common/api/stations';
+
 const SPEECH_TIME = 5000;
 
 const useStationSpeech = () => {
   const route = useRouter();
   const { transcript, listening, resetTranscript } = useSpeechRecognition();
+  const { data: stations } = useStation();
   const [keywords, setKeywords] = useState('');
 
   const startListening = useCallback(() => {
@@ -33,14 +36,15 @@ const useStationSpeech = () => {
 
   useEffect(() => {
     if (!listening && keywords) {
-      const selectedStation = '';
+      const selectedStation = stations && stations.find((item) => item.stationName === keywords);
+      console.log(selectedStation);
       if (!selectedStation || !keywords) {
         alert('일치하는 역이 없습니다. 다시 한 번 말씀해주세요.');
         return;
       }
       route.push('/result');
     }
-  }, [keywords, listening, route]);
+  }, [keywords, listening, route, stations]);
 
   useEffect(() => {
     setKeywords(transcript.replace(/\s/g, ''));

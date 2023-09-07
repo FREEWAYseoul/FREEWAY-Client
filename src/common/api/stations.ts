@@ -9,8 +9,14 @@ export type Coordinate = {
 };
 
 const fetchStations = async () => {
-  const res = await http.get<StationProps[]>('/api/stations');
-  return res.data;
+  try {
+    const res = await http.get<StationProps[]>('/api/stations');
+    if (res.status === 200) {
+      return res.data;
+    }
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 export const useStation = () => {
@@ -18,9 +24,6 @@ export const useStation = () => {
     refetchOnWindowFocus: false,
     retry: 0,
     staleTime: Infinity,
-    // enabled: !!keywords,
-    // select: (data) =>{ data.filter(0, 10)},
-    // onSuccess: (data) => console.log(data),
     onError: (e: Error) => console.log(e.message),
   });
 };

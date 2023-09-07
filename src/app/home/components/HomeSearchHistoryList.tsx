@@ -1,17 +1,19 @@
 import styled from 'styled-components';
 
-// import { useSearchContext } from '../Search/SearchContext';
-// import SearchList from '../Search/SearchList';
+import SearchList from '@/common/components/search/SearchList';
+import { StationProps } from '@/types/stationType';
 
-const HomeSearchHistoryList = () => {
-  // const { searchHistory } = useSearchContext();
+type Props = {
+  searchHistory: StationProps[];
+};
 
+const HomeSearchHistoryList = ({ searchHistory }: Props) => {
   let content = null;
-  // if (searchHistory.length) {
-  // content = <SearchList label='최근 검색' type='homepage' data={searchHistory} />;
-  // } else {
-  content = <HomeNotFoundBox>최근 검색어가 없습니다.</HomeNotFoundBox>;
-  // }
+  if (searchHistory.length) {
+    content = <SearchList label='최근 검색' type='homepage' data={searchHistory} />;
+  } else {
+    content = <HomeNotFoundBox>최근 검색어가 없습니다.</HomeNotFoundBox>;
+  }
 
   return <StyledHomeSearchListWrapper>{content}</StyledHomeSearchListWrapper>;
 };

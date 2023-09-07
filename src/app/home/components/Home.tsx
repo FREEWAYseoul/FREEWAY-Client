@@ -2,17 +2,17 @@
 
 import styled from 'styled-components';
 
+import VoiceSearchField from '../../../common/components/search/VoiceSearchField';
+import useLocalStorage from '../hooks/useLocalStorage';
 import useSpeech from '../hooks/useStationSpeech';
-// import useLocalStorage from '../../../hooks/useLocalStorage';
-// import useMic from '../../../hooks/useMic';
 import HomeHeader from './HomeHeader';
 import HomePageTitle from './HomePageTitle';
 import HomeSearchBar from './HomeSearchBar';
 import HomeSearchHistoryList from './HomeSearchHistoryList';
-import VoiceSearchField from './VoiceSearchField';
 
 const Home = () => {
   const { keywords, startListening, endListening, listening } = useSpeech();
+  const { searchHistory } = useLocalStorage();
   // const { displaySearchHistoryInOrder } = useLocalStorage();
 
   const handleClick = () => {
@@ -33,7 +33,11 @@ const Home = () => {
       <HomePageTitle />
       <HomeSearchBar handleClick={handleClick} isListening={listening} />
       <ChildrenWrapper>
-        {listening ? <VoiceSearchField keywords={keywords} /> : <HomeSearchHistoryList />}
+        {listening ? (
+          <VoiceSearchField keywords={keywords} />
+        ) : (
+          <HomeSearchHistoryList searchHistory={searchHistory} />
+        )}
       </ChildrenWrapper>
     </HomeWrapper>
   );
