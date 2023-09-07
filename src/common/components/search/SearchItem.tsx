@@ -39,7 +39,7 @@ const SearchItem = ({ name, status, id, line, isFocus, type }: SearchItemProps) 
   }, [line]);
 
   return (
-    <SearchItemWrapper id={id} onClick={handleClick} isFocus={isFocus} type={type}>
+    <SearchItemWrapper id={id} onClick={handleClick} $isFocus={isFocus} $type={type}>
       <SearchItemLeftSection>
         <Text>
           {name.split('').map((c, idx) => (
@@ -59,13 +59,22 @@ const SearchItem = ({ name, status, id, line, isFocus, type }: SearchItemProps) 
 
 export default SearchItem;
 
-const SearchItemWrapper = styled.li<{ isFocus?: boolean; type?: 'homepage' | 'searchpage' }>`
+const SearchItemWrapper = styled.li<{ $isFocus?: boolean; $type?: 'homepage' | 'searchpage' }>`
   cursor: pointer;
-  margin-bottom: 5px;
-  padding-right: 9px;
+
+  ${({ $type }) =>
+    $type === 'homepage'
+      ? css`
+          margin-bottom: 5px;
+          padding-right: 9px;
+          height: 43px;
+        `
+      : css`
+          padding: 0 20px;
+          height: 57px;
+        `};
 
   width: 100%;
-  height: 43px;
   font-weight: 600;
   display: flex;
   align-items: center;
@@ -74,8 +83,8 @@ const SearchItemWrapper = styled.li<{ isFocus?: boolean; type?: 'homepage' | 'se
     background-color: #edf5f5;
     cursor: pointer;
   }
-  background-color: ${(props) => (props.isFocus ? '#edf5f5' : 'transparent')};
-  border-bottom: ${(props) => props.type !== 'homepage' && '1px solid rgba(217, 217, 217,0.5)'};
+  background-color: ${({ $isFocus }) => ($isFocus ? '#edf5f5' : 'transparent')};
+  border-bottom: ${({ $type }) => $type !== 'homepage' && '1px solid rgba(217, 217, 217,0.5)'};
 `;
 
 const SearchItemLeftSection = styled.section`

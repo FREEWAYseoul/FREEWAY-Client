@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { StationProps } from '@/types/stationType';
 
@@ -15,20 +15,22 @@ const SearchList = ({ label, data, type }: Props) => {
 
   return (
     // <StyledListWrapper ref={autofillRef}>
-    <StyledListWrapper>
-      {label && <StyledLabel>{label}</StyledLabel>}
-      {data.map((station) => (
-        <SearchItem
-          key={station.stationId}
-          id={station.stationId}
-          name={station.stationName}
-          status={station.stationStatus}
-          line={String(station.lineId)}
-          // isFocus={selectedIdx === idx ? true : false}
-          type={type}
-        />
-      ))}
-    </StyledListWrapper>
+    <>
+      {label && <StyledLabel $type={type}>{label}</StyledLabel>}
+      <StyledListWrapper>
+        {data.map((station) => (
+          <SearchItem
+            key={station.stationId}
+            id={station.stationId}
+            name={station.stationName}
+            status={station.stationStatus}
+            line={String(station.lineId)}
+            // isFocus={selectedIdx === idx ? true : false}
+            type={type}
+          />
+        ))}
+      </StyledListWrapper>
+    </>
   );
 };
 
@@ -48,8 +50,16 @@ const StyledListWrapper = styled.ul`
   align-items: flex-start;
 `;
 
-const StyledLabel = styled.div`
+const StyledLabel = styled.div<{ $type?: 'homepage' | 'searchpage' }>`
   margin-bottom: 15px;
+
+  ${({ $type }) =>
+    $type === 'searchpage' &&
+    css`
+      margin-bottom: 0;
+      padding-left: 20px;
+      height: 57px;
+    `};
 
   display: flex;
   justify-content: flex-start;

@@ -17,7 +17,7 @@ export default SkeletonText;
 
 const Text = styled.div<Text>`
   width: 375px;
-  height: 50px;
+  height: 51px;
 
   display: flex;
   justify-content: center;

@@ -6,10 +6,11 @@ const Divider = () => {
 
 export default Divider;
 
-const StyledDivider = styled.div`
+const StyledDivider = styled.hr`
+  margin: 0;
   width: 100%;
-  height: 0px;
+  height: 1px;
 
-  opacity: 0.5;
-  border: 1px solid #d9d9d9;
+  background: #d9d9d9;
+  opacity: 0.2;
 `;

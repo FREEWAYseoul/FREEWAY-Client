@@ -9,16 +9,15 @@ import { useStation } from '@/common/api/stations';
 import useSearchBar from '../hooks/useStationSearch';
 import ProgressBar from './ProgressBar';
 import SearchBar from './SearchBar';
+import SearchContents from './SearchContents';
 import { useSearchContext } from './SearchContext';
 import SearchLoading from './SearchLoading';
 
 const Search = () => {
   const { keywords, setFilteredStations } = useSearchContext();
-  const { getFilteredStations, focusOnSearchInput, convertKeywordsToContent } = useSearchBar();
+  const { getFilteredStations, focusOnSearchInput } = useSearchBar();
   const { data, isLoading } = useStation();
   const { startListening, endListening, listening } = useStationSpeech();
-
-  const content = convertKeywordsToContent(keywords, listening);
 
   const handleClick = () => {
     if (listening) {
@@ -35,9 +34,7 @@ const Search = () => {
     }
 
     focusOnSearchInput();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [keywords, data]);
+  }, [keywords, data, focusOnSearchInput, getFilteredStations, setFilteredStations]);
 
   return (
     <SearchWrapper id='search-container'>
@@ -49,12 +46,12 @@ const Search = () => {
       />
       <DropdownBox>
         {isLoading ? (
-          <SkeletonWrapper>
+          <>
             <ProgressBar />
             <SearchLoading />
-          </SkeletonWrapper>
+          </>
         ) : (
-          <>{content}</>
+          <SearchContents keywords='' isListening={listening} />
         )}
       </DropdownBox>
     </SearchWrapper>
@@ -70,11 +67,6 @@ const SearchWrapper = styled.div`
 `;
 
 const DropdownBox = styled.div`
-  margin-top: 15px;
   max-height: 50%;
   width: 100%;
-`;
-
-const SkeletonWrapper = styled.div`
-  margin-top: -15px;
 `;
