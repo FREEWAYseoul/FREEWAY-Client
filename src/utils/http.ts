@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-const envUrl = process.env.NEXT_PUBLIC_BASE_URL ? process.env.NEXT_PUBLIC_BASE_URL : '/';
-const BASE_URL = process.env.NODE_ENV === 'development' ? '/' : envUrl;
+const BASE_URL = '/';
 
 const instance = axios.create({
   baseURL: BASE_URL,

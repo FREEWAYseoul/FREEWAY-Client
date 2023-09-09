@@ -19,6 +19,9 @@ const Pretendard = localFont({
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html>
+      <head>
+        <link rel='icon' href='/logo.svg' />
+      </head>
       <body className={Pretendard.className}>
         <QueryProvider>
           <StyledComponentsRegistry>

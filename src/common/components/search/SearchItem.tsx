@@ -13,7 +13,7 @@ type SearchItemProps = {
 };
 
 type StyledStatusProps = {
-  status: string;
+  $status: string;
 };
 
 const SearchItem = ({ name, status, id, line, isFocus, type }: SearchItemProps) => {
@@ -48,7 +48,7 @@ const SearchItem = ({ name, status, id, line, isFocus, type }: SearchItemProps) 
             </Char>
           ))}
         </Text>
-        <Status status={status}>{modifyStatus(status)}</Status>
+        <Status $status={status}>{modifyStatus(status)}</Status>
       </SearchItemLeftSection>
       <SearchItemRightSection>
         <StyledLineSVG>{svg}</StyledLineSVG>
@@ -116,8 +116,8 @@ const Status = styled.div<StyledStatusProps>`
   font-weight: bold;
 
   cursor: pointer;
-  ${(props) => {
-    switch (props.status) {
+  ${({ $status }) => {
+    switch ($status) {
       case '모두 사용 가능':
         return css`
           color: #4aa570;
