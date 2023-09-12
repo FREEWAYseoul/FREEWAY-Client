@@ -1,31 +1,28 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
-import useLocalStorage from '@/app/home/hooks/useLocalStorage';
 import SearchList from '@/common/components/search/SearchList';
 import VoiceSearchField from '@/common/components/search/VoiceSearchField';
+import { SearchContext } from '@/common/context/SearchContext';
+import useLocalStorage from '@/common/hooks/useSearchHistory';
+import useStationSpeech from '@/common/hooks/useStationSpeech';
 
-type Props = {
-  keywords: string;
-  isListening: boolean;
-};
+import NotFound from './NotFound';
 
-const SearchContents = ({ keywords, isListening }: Props) => {
+const SearchContents = () => {
+  const { keyword } = useContext(SearchContext);
   const { searchHistory } = useLocalStorage();
+  const { searchKeyword, listening } = useStationSpeech();
 
-  if (!isListening) {
-    // if (keywords) {
-    //   if (!filteredStations.length) {
-    //     content = <NotFound>"{keywords}" 검색 결과가 없습니다.</NotFound>;
-    //   } else {
-    //     content = <SearchList data={filteredStations} />;
-    //   }
-    // } else if (!keywords && searchHistory.length > 0) {
-    return <SearchList label='최근 기록' type={'searchpage'} data={searchHistory} />;
-    // }
-
-    // return <></>;
+  if (!listening) {
+    if (keyword && true) {
+      return <SearchList data={[]} />;
+    } else if (!keyword && false) {
+      return <NotFound>"{keyword}" 검색 결과가 없습니다.</NotFound>;
+    } else {
+      return <SearchList label='최근 기록' type={'searchpage'} data={searchHistory} />;
+    }
   } else {
-    return <VoiceSearchField keywords={keywords} />;
+    return <VoiceSearchField speachKeyword={searchKeyword} />;
   }
 };
 

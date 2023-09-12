@@ -7,18 +7,18 @@ import MicIcon from '@/assets/icons/mic-icon.svg';
 import animationDatan from '@/assets/lotties/purse.json';
 
 type Props = {
-  keywords: string;
+  speachKeyword: string;
 };
 
-const VoiceSearchField = ({ keywords }: Props) => {
+const VoiceSearchField = ({ speachKeyword }: Props) => {
   return (
     <VoiceSearchWrapper>
       <Lottie animationData={animationDatan} loop={true} />
       <MicContainer>
-        {keywords ? (
-          <VoiceSearchText keywords={keywords}>{keywords}</VoiceSearchText>
+        {speachKeyword ? (
+          <VoiceSearchText $keyword={speachKeyword || ''}>{speachKeyword}</VoiceSearchText>
         ) : (
-          <VoiceSearchText keywords={keywords}>듣고 있어요</VoiceSearchText>
+          <VoiceSearchText $keyword={speachKeyword || ''}>듣고 있어요</VoiceSearchText>
         )}
         <MicIcon style={{ color: '#fff' }} />
       </MicContainer>
@@ -54,7 +54,7 @@ const MicContainer = styled.div`
   text-align: center;
 `;
 
-const VoiceSearchText = styled.div<{ keywords: string }>`
+const VoiceSearchText = styled.div<{ $keyword: string }>`
   position: absolute;
   top: 50%;
   left: 50%;
@@ -67,7 +67,7 @@ const VoiceSearchText = styled.div<{ keywords: string }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${(props) => (props.keywords.length <= 0 ? '#595959' : 'black')};
+  background-color: ${({ $keyword }) => ($keyword.length <= 0 ? '#595959' : 'black')};
   padding: 0 10px;
   color: white;
   font-size: 18px;

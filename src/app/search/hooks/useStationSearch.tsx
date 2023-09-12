@@ -1,39 +1,29 @@
-import { useRouter } from 'next/navigation';
-import { useCallback } from 'react';
+import { useCallback, useContext } from 'react';
 
 import { useStation } from '@/common/api/stations';
-// import VoiceSearchField from '@/common/components/search/VoiceSearchField';
 import { StationProps } from '@/types/stationType';
 
-import { useSearchContext } from '../components/SearchContext';
+import { SearchContext } from '../../../common/context/SearchContext';
 import useAutocomplete from './useAutocomplete';
 
 const useStationSearch = () => {
-  const route = useRouter();
-  const {
-    keywords,
-    filteredStations,
-    inputRef,
-    searchHistory,
-    setKeywords,
-    setSelectedStationInfo,
-  } = useSearchContext();
+  const { keyword, filteredStations, setKeyword, setSelectedStationId } = useContext(SearchContext);
   const { data } = useStation();
   const { autocomplete } = useAutocomplete();
 
   // 실행되는 곳: 모든 페이지 검색 input onChange시
   const handleTyping = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setKeywords(e.target.value);
+      setKeyword(e.target.value);
     },
-    [setKeywords],
+    [setKeyword],
   );
 
   // 함수 설명: 서버에서 받아온 데이터 중 keywords를 포함하는 데이터만 골라 반환하는 함수.
   // 실행되는 곳: Search 페이지 useEffect시
-  const getFilteredStations = useCallback(
-    (keywords: string) => {
-      const character = keywords?.replace(/역$/, '').trim();
+  const stationsFilter = useCallback(
+    (keyword: string) => {
+      const character = keyword.replace(/역$/, '').trim();
       const wordsStartingWithKeywords = autocomplete.searchPrefix(character);
       const filteredStations = data?.filter((station: StationProps) =>
         wordsStartingWithKeywords.includes(station.stationName),
@@ -45,47 +35,42 @@ const useStationSearch = () => {
   );
 
   // 함수 설명: 키워드를 포함하는 데이터 or 로컬 데이터 중 dropdownbox에서 선택한 것과 같은 데이터만 반환하는 함수
-  const selectStationById = useCallback(
-    (id: string) => {
-      const data = keywords ? filteredStations : searchHistory;
-      const selectedStation = data.filter((station) => station.stationId == id).at(-1);
-      return selectedStation;
-    },
-    [filteredStations, searchHistory, keywords],
-  );
-
-  const selectStationByKeywords = useCallback(
-    (keywords: string) => {
-      return getFilteredStations(keywords)[0];
-    },
-    [getFilteredStations],
-  );
+  // const selectStationById = useCallback(
+  //   (id: string) => {
+  //     const selectedStation = filteredStations.filter((station) => station.stationId == id).at(-1);
+  //     return selectedStation;
+  //   },
+  //   [filteredStations],
+  // );
 
   // 함수 설명: 클릭 or submit된 역 정보를 저장(로컬과 리액트내)
   const saveStation = useCallback(
-    (selectedStation: StationProps) => {
-      setSelectedStationInfo(selectedStation);
-      // addSearchHistory(selectedStation);
-      setKeywords(selectedStation?.stationName);
+    (selectedStationId: string) => {
+      const station = data?.find((item) => item.stationId == selectedStationId);
+      if (station) {
+        setSelectedStationId(Number(selectedStationId));
+        setKeyword(station.stationName);
+        // addSearchHistory(station);
+      }
     },
-    [setKeywords, setSelectedStationInfo],
+    [data, setKeyword, setSelectedStationId],
   );
 
   const handleSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
-      if (!inputRef.current?.value.length || !filteredStations.length) {
+      if (keyword.length > 0 || !filteredStations.length) {
         e.preventDefault();
         alert('역이름을 다시 한 번 확인해주세요!');
         return;
       } else {
         e.preventDefault();
-        const selectedStation = selectStationByKeywords(keywords);
-        if (!selectedStation) return;
-        saveStation(selectedStation);
-        route.push('/subway');
+        const selectedStation = filteredStations.find(
+          (item) => item.stationName === keyword.replace(/역$/, '').trim(),
+        );
+        setSelectedStationId(Number(selectedStation?.stationId));
       }
     },
-    [inputRef, filteredStations.length, selectStationByKeywords, keywords, saveStation, route],
+    [filteredStations, setSelectedStationId, keyword],
   );
 
   const focusOnSearchInput = useCallback(() => {
@@ -94,44 +79,17 @@ const useStationSearch = () => {
   }, []);
 
   const resetKeywords = () => {
-    setKeywords('');
-  };
-
-  const convertKeywordsToContent = (keywords: string, isListening: boolean) => {
-    let content = <></>;
-
-    // if (keywords) {
-    //   if (!filteredStations.length) {
-    //     content = <NotFound>"{keywords}" 검색 결과가 없습니다.</NotFound>;
-    //   } else {
-    //     content = <SearchList data={filteredStations} />;
-    //   }
-    // } else if (!keywords && searchHistory.length > 0) {
-    //   content = <SearchList label='최근 기록' type={'searchpage'} data={searchHistory} />;
-    // } else {
-    content = <></>;
-    // }
-
-    if (isListening) {
-      if (inputRef.current) inputRef.current.disabled = true;
-      // content = <VoiceSearchField />;
-    } else {
-      if (inputRef.current) inputRef.current.disabled = false;
-    }
-
-    return content;
+    setKeyword('');
   };
 
   return {
     handleTyping,
     handleSubmit,
-    selectStationById,
-    selectStationByKeywords,
+    // selectStationById,
     saveStation,
     resetKeywords,
     focusOnSearchInput,
-    getFilteredStations,
-    convertKeywordsToContent,
+    stationsFilter,
   };
 };
 

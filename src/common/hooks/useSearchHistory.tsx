@@ -11,17 +11,17 @@ const useLocalStorage = () => {
     return data.slice(-4);
   };
 
-  const removeDuplication = (selectedStationInfo: StationProps, data: StationProps[]) => {
-    return data.filter((station) => station.stationId !== selectedStationInfo.stationId);
+  const removeDuplication = (station: StationProps, data: StationProps[]) => {
+    return data.filter((item) => item.stationId !== station.stationId);
   };
 
-  const addSearchHistory = useCallback((selectedStationInfo: StationProps) => {
-    if (!selectedStationInfo || selectedStationInfo == undefined) {
+  const addSearchHistory = useCallback((station: StationProps) => {
+    if (!station || station == undefined) {
       return;
     }
     const data = JSON.parse(localStorage.getItem(SEARCH_HISTORY) ?? '[]');
-    const dataWithoutDuplication = removeDuplication(selectedStationInfo, data);
-    const newData = [...dataWithoutDuplication, selectedStationInfo];
+    const dataWithoutDuplication = removeDuplication(station, data);
+    const newData = [...dataWithoutDuplication, station];
 
     localStorage.setItem(SEARCH_HISTORY, JSON.stringify(sliceList(newData)));
   }, []);

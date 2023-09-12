@@ -3,47 +3,25 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
 
-import useStationSpeech from '@/app/home/hooks/useStationSpeech';
+import useSearchBar from '@/app/search/hooks/useStationSearch';
 import { useStation } from '@/common/api/stations';
 
-import useSearchBar from '../hooks/useStationSearch';
 import ProgressBar from './ProgressBar';
 import SearchBar from './SearchBar';
 import SearchContents from './SearchContents';
-import { useSearchContext } from './SearchContext';
 import SearchLoading from './SearchLoading';
 
 const Search = () => {
-  const { keywords, setFilteredStations } = useSearchContext();
-  const { getFilteredStations, focusOnSearchInput } = useSearchBar();
-  const { data, isLoading } = useStation();
-  const { startListening, endListening, listening } = useStationSpeech();
-
-  const handleClick = () => {
-    if (listening) {
-      endListening();
-    } else {
-      startListening();
-    }
-  };
+  const { focusOnSearchInput } = useSearchBar();
+  const { isLoading } = useStation();
 
   useEffect(() => {
-    if (keywords) {
-      const filteredStations = getFilteredStations(keywords);
-      setFilteredStations(filteredStations);
-    }
-
     focusOnSearchInput();
-  }, [keywords, data, focusOnSearchInput, getFilteredStations, setFilteredStations]);
+  }, [focusOnSearchInput]);
 
   return (
     <SearchWrapper id='search-container'>
-      <SearchBar
-        placeholder='역이름을 입력해주세요.'
-        listeningMessage='역이름을 말해주세요.'
-        handleClick={handleClick}
-        isListening={listening}
-      />
+      <SearchBar />
       <DropdownBox>
         {isLoading ? (
           <>
@@ -51,7 +29,7 @@ const Search = () => {
             <SearchLoading />
           </>
         ) : (
-          <SearchContents keywords='' isListening={listening} />
+          <SearchContents />
         )}
       </DropdownBox>
     </SearchWrapper>

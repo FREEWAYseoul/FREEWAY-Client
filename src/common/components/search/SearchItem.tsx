@@ -1,5 +1,8 @@
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
+
+import useStationSearch from '@/app/search/hooks/useStationSearch';
 
 import { convertStationIdToSVG, modifyStatus } from '../../../utils/station';
 
@@ -17,16 +20,16 @@ type StyledStatusProps = {
 };
 
 const SearchItem = ({ name, status, id, line, isFocus, type }: SearchItemProps) => {
+  const route = useRouter();
   const [svg, setSVG] = useState(null);
+  const { saveStation } = useStationSearch();
 
   const handleClick = (
     e: React.MouseEvent<HTMLLIElement, MouseEvent> | React.KeyboardEvent<HTMLLIElement>,
   ) => {
-    console.log(e);
-    // const selectedStation = selectStationById(e.currentTarget.id);
-    // if (!selectedStation) return;
-    // saveStation(selectedStation);
-    // navigate('/result');
+    const selectedStationId = e.currentTarget.id;
+    saveStation(selectedStationId);
+    route.push('/subway');
   };
 
   const isKeyword = (char: string) => {

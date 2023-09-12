@@ -1,32 +1,38 @@
 import { useRouter } from 'next/navigation';
-import { PropsWithChildren } from 'react';
+import { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 
-import { useSearchContext } from '@/app/search/components/SearchContext';
+import useStationSearch from '@/app/search/hooks/useStationSearch';
 import ChevronIcon from '@/assets/icons/chevron.svg';
 import MicIcon from '@/assets/icons/mic-icon.svg';
 import SoundWaveIcon from '@/assets/icons/sound-wave.svg';
 import Button from '@/common/components/button/Button';
+import { SearchContext } from '@/common/context/SearchContext';
+import useInput from '@/common/hooks/useInput';
+import useStationSpeech from '@/common/hooks/useStationSpeech';
 
-import useStationSearch from '../hooks/useStationSearch';
-
-type SearchBarProps = {
-  placeholder: string;
-  listeningMessage?: string;
-  handleClick?: () => void;
-  isListening?: boolean;
-} & PropsWithChildren;
-
-const SearchBar = ({ placeholder, listeningMessage, handleClick, isListening }: SearchBarProps) => {
-  const { keywords, inputRef, setKeywords } = useSearchContext();
-  const { handleSubmit, handleTyping } = useStationSearch();
+const SearchBar = () => {
+  const { keyword } = useContext(SearchContext);
+  const { inputRef, changeInputDisabled } = useInput();
+  const { listening, handleSpeech } = useStationSpeech();
+  const { handleSubmit, handleTyping, stationsFilter } = useStationSearch();
 
   const route = useRouter();
 
   const handleGoBack = () => {
-    setKeywords('');
     route.push('/');
   };
+
+  useEffect(() => {
+    changeInputDisabled(listening);
+  }, [changeInputDisabled, listening]);
+
+  useEffect(() => {
+    if (keyword) {
+      stationsFilter(keyword);
+    }
+  }, [keyword, stationsFilter]);
+
   return (
     <>
       <StyledSearchBarWrapper>
@@ -36,15 +42,15 @@ const SearchBar = ({ placeholder, listeningMessage, handleClick, isListening }: 
         <StyledSearchForm onSubmit={handleSubmit}>
           <StyledSearchBarInput
             id='search-bar'
-            value={keywords || ''}
+            value={keyword || ''}
             type='text'
-            placeholder={isListening ? listeningMessage : placeholder}
+            placeholder={listening ? '역이름을 말해주세요.' : '역이름을 입력해주세요.'}
             onChange={handleTyping}
             ref={inputRef}
           />
         </StyledSearchForm>
-        <Button handleOnClick={handleClick}>
-          {isListening ? (
+        <Button handleOnClick={handleSpeech}>
+          {listening ? (
             <SoundWaveIcon style={{ color: '#316BFF' }} />
           ) : (
             <MicIcon style={{ color: '#316BFF' }} />
