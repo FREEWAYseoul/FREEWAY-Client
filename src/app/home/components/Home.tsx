@@ -16,7 +16,7 @@ import HomeSearchHistoryList from './HomeSearchHistoryList';
 const Home = () => {
   const { resetKeywords } = useStationSearch();
   const { searchKeyword, handleSpeech, listening } = useSpeech();
-  const { searchHistory } = useLocalStorage();
+  const { searchHistory, sliceList } = useLocalStorage();
 
   useEffect(() => {
     resetKeywords();
@@ -31,7 +31,7 @@ const Home = () => {
         {listening ? (
           <VoiceSearchField speachKeyword={searchKeyword} />
         ) : (
-          <HomeSearchHistoryList searchHistory={searchHistory} />
+          <HomeSearchHistoryList searchHistory={sliceList(searchHistory)} />
         )}
       </ChildrenWrapper>
     </HomeWrapper>

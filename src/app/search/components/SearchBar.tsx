@@ -15,7 +15,7 @@ const SearchBar = () => {
   const { keyword } = useContext(SearchContext);
   const { inputRef, changeInputDisabled } = useInput();
   const { listening, handleSpeech } = useStationSpeech();
-  const { handleSubmit, handleTyping, stationsFilter } = useStationSearch();
+  const { handleSubmit, handleTyping } = useStationSearch();
 
   const route = useRouter();
 
@@ -26,12 +26,6 @@ const SearchBar = () => {
   useEffect(() => {
     changeInputDisabled(listening);
   }, [changeInputDisabled, listening]);
-
-  useEffect(() => {
-    if (keyword) {
-      stationsFilter(keyword);
-    }
-  }, [keyword, stationsFilter]);
 
   return (
     <>

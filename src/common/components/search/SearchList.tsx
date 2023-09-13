@@ -1,5 +1,7 @@
+import { useContext } from 'react';
 import styled, { css } from 'styled-components';
 
+import { SearchContext } from '@/common/context/SearchContext';
 import { StationProps } from '@/types/stationType';
 
 import SearchItem from './SearchItem';
@@ -11,22 +13,22 @@ type Props = {
 };
 
 const SearchList = ({ label, data, type }: Props) => {
-  // const { autofillRef, selectedIdx } = useSearchContext();
+  const { autofillRef, selectedIdx, keyword } = useContext(SearchContext);
 
   return (
-    // <StyledListWrapper ref={autofillRef}>
     <>
       {label && <StyledLabel $type={type}>{label}</StyledLabel>}
-      <StyledListWrapper>
-        {data.map((station) => (
+      <StyledListWrapper ref={autofillRef}>
+        {data.map((station, idx) => (
           <SearchItem
             key={station.stationId}
             id={station.stationId}
             name={station.stationName}
             status={station.stationStatus}
             line={String(station.lineId)}
-            // isFocus={selectedIdx === idx ? true : false}
+            isFocus={selectedIdx === idx ? true : false}
             type={type}
+            keyword={keyword}
           />
         ))}
       </StyledListWrapper>

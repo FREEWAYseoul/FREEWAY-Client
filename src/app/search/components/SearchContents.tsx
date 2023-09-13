@@ -9,15 +9,17 @@ import useStationSpeech from '@/common/hooks/useStationSpeech';
 import NotFound from './NotFound';
 
 const SearchContents = () => {
-  const { keyword } = useContext(SearchContext);
+  const { keyword, filteredStations } = useContext(SearchContext);
   const { searchHistory } = useLocalStorage();
   const { searchKeyword, listening } = useStationSpeech();
 
   if (!listening) {
-    if (keyword && true) {
-      return <SearchList data={[]} />;
-    } else if (!keyword && false) {
-      return <NotFound>"{keyword}" 검색 결과가 없습니다.</NotFound>;
+    if (keyword) {
+      if (filteredStations.length > 0) {
+        return <SearchList data={filteredStations} />;
+      } else {
+        return <NotFound>"{keyword}" 검색 결과가 없습니다.</NotFound>;
+      }
     } else {
       return <SearchList label='최근 기록' type={'searchpage'} data={searchHistory} />;
     }

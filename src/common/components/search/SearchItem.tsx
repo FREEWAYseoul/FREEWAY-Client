@@ -13,13 +13,14 @@ type SearchItemProps = {
   line?: string;
   isFocus?: boolean;
   type?: 'homepage' | 'searchpage';
+  keyword: string;
 };
 
 type StyledStatusProps = {
   $status: string;
 };
 
-const SearchItem = ({ name, status, id, line, isFocus, type }: SearchItemProps) => {
+const SearchItem = ({ name, status, id, line, isFocus, type, keyword }: SearchItemProps) => {
   const route = useRouter();
   const [svg, setSVG] = useState(null);
   const { saveStation } = useStationSearch();
@@ -33,8 +34,7 @@ const SearchItem = ({ name, status, id, line, isFocus, type }: SearchItemProps) 
   };
 
   const isKeyword = (char: string) => {
-    // return keywords.includes(char);
-    return !char;
+    return keyword.includes(char);
   };
 
   useEffect(() => {

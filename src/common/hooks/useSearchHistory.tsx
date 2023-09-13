@@ -23,15 +23,15 @@ const useLocalStorage = () => {
     const dataWithoutDuplication = removeDuplication(station, data);
     const newData = [...dataWithoutDuplication, station];
 
-    localStorage.setItem(SEARCH_HISTORY, JSON.stringify(sliceList(newData)));
+    localStorage.setItem(SEARCH_HISTORY, JSON.stringify(newData));
   }, []);
 
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem(SEARCH_HISTORY) ?? '[]');
-    setSearchHistory(sliceList(data).reverse());
+    setSearchHistory(data.reverse());
   }, []);
 
-  return { searchHistory, addSearchHistory };
+  return { searchHistory, sliceList, addSearchHistory };
 };
 
 export default useLocalStorage;
