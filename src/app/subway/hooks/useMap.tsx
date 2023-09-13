@@ -1,0 +1,132 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { createContext, useContext, useEffect, useState } from 'react';
+
+import MyMarkerIcon from '@/assets/icons/myMarker.png';
+import { useStation } from '@/common/api/stations';
+import { StationContext } from '@/common/context/StationContext';
+import { ElevatorProps, StationProps } from '@/types/stationType';
+
+export const NaverMapContext = createContext<naver.maps.Map | null>(null);
+
+export const useMap = () => {
+  const { station } = useContext(StationContext);
+  const naverMap = useContext(NaverMapContext);
+  const { data: stationData, isLoading } = useStation();
+  const [isMyMarker, setIsMyMarker] = useState<boolean>(false);
+  const [stationMarkers, setStationMarkers] = useState<StationProps[]>([]);
+  const [elevatorMarkers, setElevatorMarkers] = useState<ElevatorProps[]>(station.elevators);
+
+  if (!naverMap) {
+    throw new Error('map이 존재하지 않습니다.');
+  }
+
+  /**
+   * 지도 영역 좌표
+   */
+  const mapAreaCoordinate = () => {
+    const bounds = naverMap.getBounds();
+    return {
+      sw: {
+        latitude: bounds.minY(),
+        longitude: bounds.minX(),
+      },
+      ne: {
+        latitude: bounds.maxY(),
+        longitude: bounds.maxX(),
+      },
+    };
+  };
+
+  /**
+   * 지도 영역 이동 시 지하철
+   */
+  const setStationMarker = () => {
+    const mapCoordinate = mapAreaCoordinate();
+
+    if (stationData) {
+      const filterSubways = stationData.filter((item: StationProps) => {
+        const { coordinate } = item;
+        if (
+          mapCoordinate.sw.latitude <= coordinate.latitude &&
+          coordinate.latitude <= mapCoordinate.ne.latitude &&
+          mapCoordinate.sw.longitude <= coordinate.longitude &&
+          coordinate.longitude <= mapCoordinate.ne.longitude
+        )
+          return item;
+      });
+      setStationMarkers(filterSubways);
+    }
+  };
+
+  // 내 위치 마커
+  // const refreshMyMarker = () => {
+  //   navigator.geolocation.getCurrentPosition((position) => {
+  //     const { latitude, longitude } = position.coords;
+  //     const currentPosition = new naver.maps.LatLng(latitude, longitude);
+  //     myMarker?.setMap(null);
+  //     const marker = new naver.maps.Marker({
+  //       position: currentPosition,
+  //       map: naverMap,
+  //       icon: {
+  //         content: `<div><img src='${MyMarkerIcon}' alt="내 위치"/></div>`,
+  //         anchor: new naver.maps.Point(40, 40),
+  //       },
+  //     });
+  //     setMyMarker(marker);
+
+  //     naverMap.setCenter(currentPosition);
+  //   });
+  // };
+
+  const trackingMyPosition = () => {
+    const myMarker: { marker: naver.maps.Marker | null } = { marker: null };
+    setIsMyMarker(true);
+
+    if (!isMyMarker) {
+      navigator.geolocation.watchPosition((position) => {
+        const { latitude, longitude } = position.coords;
+        const currentPosition = new naver.maps.LatLng(latitude, longitude);
+
+        if (!myMarker.marker) {
+          const marker = new naver.maps.Marker({
+            position: currentPosition,
+            map: naverMap,
+            icon: {
+              content: `<div><img src='${MyMarkerIcon}' alt="내 위치"/></div>`,
+              anchor: new naver.maps.Point(40, 40),
+            },
+          });
+          myMarker.marker = marker;
+          naverMap.setCenter(currentPosition);
+        } else {
+          myMarker.marker?.setPosition(currentPosition);
+        }
+      });
+    } else {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const { latitude, longitude } = position.coords;
+        const currentPosition = new naver.maps.LatLng(latitude, longitude);
+        console.log(latitude, longitude);
+        naverMap.setCenter(currentPosition);
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (!isLoading) {
+      setStationMarker();
+    }
+  }, [isLoading]);
+
+  useEffect(() => {
+    setElevatorMarkers(station.elevators);
+  }, [station]);
+
+  return {
+    naverMap,
+    stationMarkers,
+    setStationMarker,
+    elevatorMarkers,
+    trackingMyPosition,
+  };
+};
