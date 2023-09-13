@@ -1,42 +1,37 @@
 'use client';
 
+import { useEffect } from 'react';
 import styled from 'styled-components';
 
+import useStationSearch from '@/app/search/hooks/useStationSearch';
+import useLocalStorage from '@/common/hooks/useSearchHistory';
+import useSpeech from '@/common/hooks/useStationSpeech';
+
 import VoiceSearchField from '../../../common/components/search/VoiceSearchField';
-import useLocalStorage from '../hooks/useLocalStorage';
-import useSpeech from '../hooks/useStationSpeech';
 import HomeHeader from './HomeHeader';
 import HomePageTitle from './HomePageTitle';
 import HomeSearchBar from './HomeSearchBar';
 import HomeSearchHistoryList from './HomeSearchHistoryList';
 
 const Home = () => {
-  const { keywords, startListening, endListening, listening } = useSpeech();
-  const { searchHistory } = useLocalStorage();
-  // const { displaySearchHistoryInOrder } = useLocalStorage();
+  const { resetKeywords } = useStationSearch();
+  const { searchKeyword, handleSpeech, listening } = useSpeech();
+  const { searchHistory, sliceList } = useLocalStorage();
 
-  const handleClick = () => {
-    if (listening) {
-      endListening();
-    } else {
-      startListening();
-    }
-  };
-
-  // useEffect(() => {
-  //   displaySearchHistoryInOrder();
-  // }, [displaySearchHistoryInOrder]);
+  useEffect(() => {
+    resetKeywords();
+  }, [resetKeywords]);
 
   return (
     <HomeWrapper id='home-container'>
       <HomeHeader />
       <HomePageTitle />
-      <HomeSearchBar handleClick={handleClick} isListening={listening} />
+      <HomeSearchBar handleClick={handleSpeech} isListening={listening} />
       <ChildrenWrapper>
         {listening ? (
-          <VoiceSearchField keywords={keywords} />
+          <VoiceSearchField speachKeyword={searchKeyword} />
         ) : (
-          <HomeSearchHistoryList searchHistory={searchHistory} />
+          <HomeSearchHistoryList searchHistory={sliceList(searchHistory)} />
         )}
       </ChildrenWrapper>
     </HomeWrapper>
@@ -48,7 +43,7 @@ export default Home;
 const HomeWrapper = styled.div`
   width: 100%;
   height: 100%;
-  padding: 0 24px;
+  padding: 0 20px;
 `;
 
 const ChildrenWrapper = styled.div`

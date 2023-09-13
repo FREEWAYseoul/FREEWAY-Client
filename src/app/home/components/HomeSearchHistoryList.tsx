@@ -24,6 +24,8 @@ const StyledHomeSearchListWrapper = styled.div`
   width: 100%;
   max-height: 220px;
   width: 100%;
+
+  padding-left: 4px;
 `;
 
 const HomeNotFoundBox = styled.div`

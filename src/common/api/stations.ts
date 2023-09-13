@@ -11,11 +11,9 @@ export type Coordinate = {
 const fetchStations = async () => {
   try {
     const res = await http.get<StationProps[]>('/api/stations');
-    if (res.status === 200) {
-      return res.data;
-    }
+    return res?.data;
   } catch (error) {
-    console.error(error);
+    throw error;
   }
 };
 
@@ -24,23 +22,14 @@ export const useStation = () => {
     refetchOnWindowFocus: false,
     retry: 0,
     staleTime: Infinity,
-    onError: (e: Error) => console.log(e.message),
   });
 };
 
 const fetchStationInfo = async (stationId: string | number) => {
-  try {
-    const res = await http.get<StationDetailProps>(`/api/stations/${stationId}`);
-    if (res.status === 200) {
-      return res.data;
-    }
-  } catch (error) {
-    console.error(error);
-  }
+  const res = await http.get<StationDetailProps>(`/api/stations/${stationId}`);
+  return res?.data;
 };
 
 export const useStationInfo = (stationId: number) => {
-  return useQuery(['stationsInfo', stationId], () => fetchStationInfo(stationId), {
-    onError: (e: Error) => console.log(e.message),
-  });
+  return useQuery(['stationsInfo', stationId], () => fetchStationInfo(stationId), {});
 };

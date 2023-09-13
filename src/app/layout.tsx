@@ -4,7 +4,7 @@ import { PropsWithChildren } from 'react';
 
 import LayoutWrapper from '../common/LayoutWrapper';
 import GlobalStyle from '../styles/global';
-import QueryProvider from './QueryProvider';
+import Provider from './Provider';
 import StyledComponentsRegistry from './registry';
 
 export const metadata: Metadata = {
@@ -19,15 +19,18 @@ const Pretendard = localFont({
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html>
+      <head>
+        <link rel='icon' href='/logo.svg' />
+      </head>
       <body className={Pretendard.className}>
-        <QueryProvider>
+        <Provider>
           <StyledComponentsRegistry>
             <LayoutWrapper>
               <GlobalStyle />
               {children}
             </LayoutWrapper>
           </StyledComponentsRegistry>
-        </QueryProvider>
+        </Provider>
       </body>
     </html>
   );

@@ -1,5 +1,7 @@
-import styled from 'styled-components';
+import { useContext } from 'react';
+import styled, { css } from 'styled-components';
 
+import { SearchContext } from '@/common/context/SearchContext';
 import { StationProps } from '@/types/stationType';
 
 import SearchItem from './SearchItem';
@@ -11,24 +13,26 @@ type Props = {
 };
 
 const SearchList = ({ label, data, type }: Props) => {
-  // const { autofillRef, selectedIdx } = useSearchContext();
+  const { autofillRef, selectedIdx, keyword } = useContext(SearchContext);
 
   return (
-    // <StyledListWrapper ref={autofillRef}>
-    <StyledListWrapper>
-      {label && <StyledLabel>{label}</StyledLabel>}
-      {data.map((station) => (
-        <SearchItem
-          key={station.stationId}
-          id={station.stationId}
-          name={station.stationName}
-          status={station.stationStatus}
-          line={String(station.lineId)}
-          // isFocus={selectedIdx === idx ? true : false}
-          type={type}
-        />
-      ))}
-    </StyledListWrapper>
+    <>
+      {label && <StyledLabel $type={type}>{label}</StyledLabel>}
+      <StyledListWrapper ref={autofillRef}>
+        {data.map((station, idx) => (
+          <SearchItem
+            key={station.stationId}
+            id={station.stationId}
+            name={station.stationName}
+            status={station.stationStatus}
+            line={String(station.lineId)}
+            isFocus={selectedIdx === idx ? true : false}
+            type={type}
+            keyword={keyword}
+          />
+        ))}
+      </StyledListWrapper>
+    </>
   );
 };
 
@@ -48,8 +52,16 @@ const StyledListWrapper = styled.ul`
   align-items: flex-start;
 `;
 
-const StyledLabel = styled.div`
+const StyledLabel = styled.div<{ $type?: 'homepage' | 'searchpage' }>`
   margin-bottom: 15px;
+
+  ${({ $type }) =>
+    $type === 'searchpage' &&
+    css`
+      margin-bottom: 0;
+      padding-left: 20px;
+      height: 57px;
+    `};
 
   display: flex;
   justify-content: flex-start;

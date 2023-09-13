@@ -1,5 +1,11 @@
+import Subway from './components/Subway';
+
 const page = () => {
-  return <div>Subway</div>;
+  return (
+    <>
+      <Subway />
+    </>
+  );
 };
 
 export default page;

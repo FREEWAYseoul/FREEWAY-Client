@@ -1,18 +1,18 @@
 import 'regenerator-runtime/runtime';
 
-import { useRouter } from 'next/navigation';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
 import { useStation } from '@/common/api/stations';
+import { SearchContext } from '@/common/context/SearchContext';
 
 const SPEECH_TIME = 5000;
 
 const useStationSpeech = () => {
-  const route = useRouter();
+  const { setSelectedStationId } = useContext(SearchContext);
   const { transcript, listening, resetTranscript } = useSpeechRecognition();
   const { data: stations } = useStation();
-  const [keywords, setKeywords] = useState('');
+  const [searchKeyword, setSearchKeyword] = useState('');
 
   const startListening = useCallback(() => {
     SpeechRecognition.startListening({ language: 'ko-KR' });
@@ -30,24 +30,33 @@ const useStationSpeech = () => {
   };
 
   const resetSpeeachKeywords = () => {
-    setKeywords('');
+    setSearchKeyword('');
     resetTranscript();
   };
 
+  const handleSpeech = () => {
+    if (listening) {
+      endListening();
+    } else {
+      startListening();
+    }
+  };
+
   useEffect(() => {
-    if (!listening && keywords) {
-      const selectedStation = stations && stations.find((item) => item.stationName === keywords);
-      console.log(selectedStation);
-      if (!selectedStation || !keywords) {
+    if (!listening && searchKeyword) {
+      const selectedStation =
+        stations && stations.find((item) => item.stationName === searchKeyword);
+      if (!selectedStation || !searchKeyword) {
         alert('일치하는 역이 없습니다. 다시 한 번 말씀해주세요.');
         return;
       }
-      route.push('/result');
+
+      setSelectedStationId(Number(selectedStation.stationId));
     }
-  }, [keywords, listening, route, stations]);
+  }, [searchKeyword, listening, stations, setSelectedStationId]);
 
   useEffect(() => {
-    setKeywords(transcript.replace(/\s/g, ''));
+    setSearchKeyword(transcript.replace(/\s/g, '').replace(/역$/, '').trim());
   }, [transcript]);
 
   useEffect(() => {
@@ -56,7 +65,7 @@ const useStationSpeech = () => {
     };
   }, []);
 
-  return { keywords, startListening, endListening, listening };
+  return { searchKeyword, handleSpeech, listening };
 };
 
 export default useStationSpeech;

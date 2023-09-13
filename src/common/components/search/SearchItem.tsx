@@ -1,5 +1,8 @@
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
+
+import useStationSearch from '@/app/search/hooks/useStationSearch';
 
 import { convertStationIdToSVG, modifyStatus } from '../../../utils/station';
 
@@ -10,28 +13,28 @@ type SearchItemProps = {
   line?: string;
   isFocus?: boolean;
   type?: 'homepage' | 'searchpage';
+  keyword: string;
 };
 
 type StyledStatusProps = {
-  status: string;
+  $status: string;
 };
 
-const SearchItem = ({ name, status, id, line, isFocus, type }: SearchItemProps) => {
+const SearchItem = ({ name, status, id, line, isFocus, type, keyword }: SearchItemProps) => {
+  const route = useRouter();
   const [svg, setSVG] = useState(null);
+  const { saveStation } = useStationSearch();
 
   const handleClick = (
     e: React.MouseEvent<HTMLLIElement, MouseEvent> | React.KeyboardEvent<HTMLLIElement>,
   ) => {
-    console.log(e);
-    // const selectedStation = selectStationById(e.currentTarget.id);
-    // if (!selectedStation) return;
-    // saveStation(selectedStation);
-    // navigate('/result');
+    const selectedStationId = e.currentTarget.id;
+    saveStation(selectedStationId);
+    route.push('/subway');
   };
 
   const isKeyword = (char: string) => {
-    // return keywords.includes(char);
-    return !char;
+    return keyword.includes(char);
   };
 
   useEffect(() => {
@@ -39,16 +42,16 @@ const SearchItem = ({ name, status, id, line, isFocus, type }: SearchItemProps) 
   }, [line]);
 
   return (
-    <SearchItemWrapper id={id} onClick={handleClick} isFocus={isFocus} type={type}>
+    <SearchItemWrapper id={id} onClick={handleClick} $isFocus={isFocus} $type={type}>
       <SearchItemLeftSection>
         <Text>
           {name.split('').map((c, idx) => (
-            <Char key={idx} isKeyword={isKeyword(c)} type={type}>
+            <Char key={idx} $isKeyword={isKeyword(c)} $type={type}>
               {c}
             </Char>
           ))}
         </Text>
-        <Status status={status}>{modifyStatus(status)}</Status>
+        <Status $status={status}>{modifyStatus(status)}</Status>
       </SearchItemLeftSection>
       <SearchItemRightSection>
         <StyledLineSVG>{svg}</StyledLineSVG>
@@ -59,22 +62,32 @@ const SearchItem = ({ name, status, id, line, isFocus, type }: SearchItemProps) 
 
 export default SearchItem;
 
-const SearchItemWrapper = styled.li<{ isFocus?: boolean; type?: 'homepage' | 'searchpage' }>`
-  margin-bottom: 5px;
+const SearchItemWrapper = styled.li<{ $isFocus?: boolean; $type?: 'homepage' | 'searchpage' }>`
+  cursor: pointer;
+
+  ${({ $type }) =>
+    $type === 'homepage'
+      ? css`
+          margin-bottom: 5px;
+          padding-right: 9px;
+          height: 43px;
+        `
+      : css`
+          padding: 0 20px;
+          height: 57px;
+        `};
 
   width: 100%;
-  height: 43px;
   font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  cursor: pointer;
   &:hover {
     background-color: #edf5f5;
     cursor: pointer;
   }
-  background-color: ${(props) => (props.isFocus ? '#edf5f5' : 'transparent')};
-  border-bottom: ${(props) => props.type !== 'homepage' && '1px solid rgba(217, 217, 217,0.5)'};
+  background-color: ${({ $isFocus }) => ($isFocus ? '#edf5f5' : 'transparent')};
+  border-bottom: ${({ $type }) => $type !== 'homepage' && '1px solid rgba(217, 217, 217,0.5)'};
 `;
 
 const SearchItemLeftSection = styled.section`
@@ -92,9 +105,9 @@ const Text = styled.div`
   margin-right: 6px;
 `;
 
-const Char = styled.span<{ isKeyword?: boolean; type?: 'homepage' | 'searchpage' }>`
-  color: ${(props) => (props.isKeyword ? 'rgba(73, 80, 116, 1)' : 'rgba(73, 80, 116, 0.5)')};
-  color: ${(props) => props.type === 'homepage' && 'rgba(73, 80, 116, 1)'};
+const Char = styled.span<{ $isKeyword?: boolean; $type?: 'homepage' | 'searchpage' }>`
+  color: ${({ $isKeyword }) => ($isKeyword ? 'rgba(73, 80, 116, 1)' : 'rgba(73, 80, 116, 0.5)')};
+  color: ${({ $type }) => $type === 'homepage' && 'rgba(73, 80, 116, 1)'};
 `;
 
 const Status = styled.div<StyledStatusProps>`
@@ -106,8 +119,8 @@ const Status = styled.div<StyledStatusProps>`
   font-weight: bold;
 
   cursor: pointer;
-  ${(props) => {
-    switch (props.status) {
+  ${({ $status }) => {
+    switch ($status) {
       case '모두 사용 가능':
         return css`
           color: #4aa570;
