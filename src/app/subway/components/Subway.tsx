@@ -6,8 +6,10 @@ import { useStationInfo } from '@/common/api/stations';
 import { SearchContext } from '@/common/context/SearchContext';
 import StationContextProvider from '@/common/context/StationContext';
 
-import Mapview from './map/Mapview';
+import BottomSheet from './bottomSheet/BottomSheet';
+import ContentsView from './ContentsView';
 import NaverMapScriptLoader from './map/NaverMapScriptLoader';
+import StationSearchBar from './StationSearchBar';
 
 const Subway = () => {
   const { selectedStationId } = useContext(SearchContext);
@@ -17,8 +19,9 @@ const Subway = () => {
     <NaverMapScriptLoader>
       {station && (
         <StationContextProvider initStation={station}>
-          <Mapview />
-          SearchId : {selectedStationId}
+          <StationSearchBar station={station} />
+          <ContentsView />
+          <BottomSheet />
         </StationContextProvider>
       )}
     </NaverMapScriptLoader>

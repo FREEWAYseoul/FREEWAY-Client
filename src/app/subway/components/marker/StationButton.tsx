@@ -108,5 +108,6 @@ const StyledWrapper = styled.div<{ $isActive?: boolean; $isDisabled?: boolean }>
 
   & > P {
     margin: 0;
+    white-space: nowrap;
   }
 `;

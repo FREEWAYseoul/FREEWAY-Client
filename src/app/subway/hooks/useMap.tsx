@@ -87,7 +87,6 @@ export const useMap = () => {
       navigator.geolocation.getCurrentPosition((position) => {
         const { latitude, longitude } = position.coords;
         const currentPosition = new naver.maps.LatLng(latitude, longitude);
-        console.log(latitude, longitude);
         naverMap.setCenter(currentPosition);
       });
     }

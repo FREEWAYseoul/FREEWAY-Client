@@ -4,7 +4,6 @@ import { useStationContext } from '@/common/context/StationContext';
 
 import DynamicMap from './DynamicMap';
 import MapMarkerController from './MapMarkerController';
-// import MapMarkerController from './MapMarkerController';
 
 const Mapview = () => {
   const { station } = useStationContext();

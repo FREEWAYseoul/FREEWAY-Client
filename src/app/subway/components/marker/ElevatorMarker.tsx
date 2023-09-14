@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-import ElevatorIcon1 from '@/assets/icons/elevator.svg';
-import ElevatorIcon2 from '@/assets/icons/elevator2.svg';
+import ElevatorIcon from '@/assets/icons/elevator.svg';
+import ElevatorStopIcon from '@/assets/icons/elevator-stop.svg';
 
 interface ElevatorMarkerProps {
   text: number;
@@ -13,7 +13,7 @@ const ElevatorMarker = ({ text, status }: ElevatorMarkerProps) => {
   return (
     <StyledElevatorMarker $status={status}>
       <StyledElevator $status={status}>
-        {status === '사용 가능' || status === '확인 불가' ? <ElevatorIcon1 /> : <ElevatorIcon2 />}
+        {status === '사용 가능' || status === '확인 불가' ? <ElevatorIcon /> : <ElevatorStopIcon />}
         {newText}
       </StyledElevator>
       <div className='triangle'>

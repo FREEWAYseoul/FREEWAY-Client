@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { StationTitleProps } from '@/types/stationType';
 import { titleEclipse } from '@/utils/format';
 
-import Badge from './Badge';
+import Badge from '../Badge';
 
 const StationTitle = ({ line, title, color, type }: StationTitleProps) => {
   return (
