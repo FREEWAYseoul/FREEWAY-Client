@@ -64,7 +64,7 @@ const StyledSearchBarWrapper = styled.div`
 
   display: grid;
   grid-template-columns: 36px minmax(0, 1fr) 75px;
-  background-color: #ffffff;
+  background-color: #fff;
 
   padding-left: 13px;
 
@@ -83,7 +83,6 @@ const StyledSearchBarInput = styled.input`
   border-radius: 4px;
   border: none;
   outline: none;
-  padding-top: 4px;
   padding-left: 11px;
   font-size: 18px;
   font-weight: 500;

@@ -11,7 +11,7 @@ export type Coordinate = {
 const fetchStations = async () => {
   try {
     const res = await http.get<StationProps[]>('/api/stations');
-    return res?.data;
+    return res?.data ?? [];
   } catch (error) {
     throw error;
   }
@@ -26,8 +26,12 @@ export const useStation = () => {
 };
 
 const fetchStationInfo = async (stationId: string | number) => {
-  const res = await http.get<StationDetailProps>(`/api/stations/${stationId}`);
-  return res?.data;
+  try {
+    const res = await http.get<StationDetailProps>(`/api/stations/${stationId}`);
+    return res?.data ?? {};
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const useStationInfo = (stationId: number) => {

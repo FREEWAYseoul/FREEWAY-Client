@@ -8,7 +8,7 @@ interface Props extends PropsWithChildren {
   height?: number;
   color?: string;
   hover?: boolean;
-  handleOnClick?: () => void;
+  handleOnClick?: (arg1: React.MouseEvent<HTMLElement>) => void;
 }
 
 const Button = ({ width, height, hover, handleOnClick, children }: Props) => {

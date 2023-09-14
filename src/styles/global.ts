@@ -7,7 +7,13 @@ const GlobalStyle = createGlobalStyle`
 
   ${reset}
 
+  @font-face {
+    font-family: 'Pretendard';
+    src: url('/fonts/PretendardVariable.woff2');
+  }
+
   *{
+    font-family: Pretendard;
     box-sizing: border-box;
   }
 
