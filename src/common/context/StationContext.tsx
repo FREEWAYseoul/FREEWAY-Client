@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 
 import { useStationInfo } from '@/common/api/stations';
 import { SLIDER_RANGE } from '@/common/constants/slide';
@@ -25,7 +25,7 @@ export interface ReactContextValueProps {
   handleTouchEnd: () => void;
 }
 
-export const StationContext = createContext<ReactContextValueProps | null>(null);
+const StationContext = createContext<ReactContextValueProps | null>(null);
 
 const StationContextProvider = ({ children, initStation }: ResultContextProviderProps) => {
   const [station, setStation] = useState<StationDetailProps>(initStation);
@@ -122,6 +122,15 @@ const StationContextProvider = ({ children, initStation }: ResultContextProvider
   };
 
   return <StationContext.Provider value={contextValue}>{children}</StationContext.Provider>;
+};
+
+export const useStationContext = () => {
+  const context = useContext(StationContext);
+  if (!context) {
+    throw new Error('no context');
+  }
+
+  return context;
 };
 
 export default StationContextProvider;

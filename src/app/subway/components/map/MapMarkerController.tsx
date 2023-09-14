@@ -2,16 +2,18 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
 
-import TargetIcon from '../../../assets/icons/target.svg';
-import { useMap } from '../../../hooks/useMap';
-import CustomOverlay from '../../common/station/CustomOverlay';
-import ElevatorMarker from '../../common/station/ElevatorMarker';
-import StationMarker from '../../common/station/StationMarker';
-import { useResultContext } from '../station/ResultContext';
+import TargetIcon from '@/assets/icons/target.svg';
+import { useStationContext } from '@/common/context/StationContext';
+
+import { useMap } from '../../hooks/useMap';
+import CustomOverlay from '../marker/CustomOverlay';
+import ElevatorMarker from '../marker/ElevatorMarker';
+import StationMarker from '../marker/StationMarker';
 
 const MapMarkerController = () => {
   const { station, handleShowInfo, handleChangeStation, isShow, handleShowController } =
-    useResultContext();
+    useStationContext();
+
   const { naverMap, stationMarkers, elevatorMarkers, setStationMarker, trackingMyPosition } =
     useMap();
 
@@ -68,7 +70,7 @@ const MapMarkerController = () => {
   return (
     <>
       <StyledMyMarker onClick={trackingMyPosition}>
-        <img src={TargetIcon} />
+        <TargetIcon />
       </StyledMyMarker>
       {/* 지하철 타이틀 마커 */}
       {stationMarkers.length > 0 && naverMap.getZoom() > 15 && (

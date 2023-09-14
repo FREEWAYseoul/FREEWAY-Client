@@ -1,15 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { createContext, useContext, useEffect, useState } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
 
-import MyMarkerIcon from '@/assets/icons/myMarker.png';
+import MyMarkerIcon from '@/assets/icons/my-marker.svg';
 import { useStation } from '@/common/api/stations';
-import { StationContext } from '@/common/context/StationContext';
+import { useStationContext } from '@/common/context/StationContext';
 import { ElevatorProps, StationProps } from '@/types/stationType';
 
 export const NaverMapContext = createContext<naver.maps.Map | null>(null);
 
 export const useMap = () => {
-  const { station } = useContext(StationContext);
+  const { station } = useStationContext();
   const naverMap = useContext(NaverMapContext);
   const { data: stationData, isLoading } = useStation();
   const [isMyMarker, setIsMyMarker] = useState<boolean>(false);
@@ -58,26 +59,6 @@ export const useMap = () => {
     }
   };
 
-  // 내 위치 마커
-  // const refreshMyMarker = () => {
-  //   navigator.geolocation.getCurrentPosition((position) => {
-  //     const { latitude, longitude } = position.coords;
-  //     const currentPosition = new naver.maps.LatLng(latitude, longitude);
-  //     myMarker?.setMap(null);
-  //     const marker = new naver.maps.Marker({
-  //       position: currentPosition,
-  //       map: naverMap,
-  //       icon: {
-  //         content: `<div><img src='${MyMarkerIcon}' alt="내 위치"/></div>`,
-  //         anchor: new naver.maps.Point(40, 40),
-  //       },
-  //     });
-  //     setMyMarker(marker);
-
-  //     naverMap.setCenter(currentPosition);
-  //   });
-  // };
-
   const trackingMyPosition = () => {
     const myMarker: { marker: naver.maps.Marker | null } = { marker: null };
     setIsMyMarker(true);
@@ -92,7 +73,7 @@ export const useMap = () => {
             position: currentPosition,
             map: naverMap,
             icon: {
-              content: `<div><img src='${MyMarkerIcon}' alt="내 위치"/></div>`,
+              content: `<div>${renderToStaticMarkup(<MyMarkerIcon />)}</div>`,
               anchor: new naver.maps.Point(40, 40),
             },
           });

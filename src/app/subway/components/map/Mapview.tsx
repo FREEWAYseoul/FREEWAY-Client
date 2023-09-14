@@ -1,24 +1,18 @@
-import { useContext } from 'react';
 import styled from 'styled-components';
 
-import { StationContext } from '@/common/context/StationContext';
+import { useStationContext } from '@/common/context/StationContext';
 
 import DynamicMap from './DynamicMap';
+import MapMarkerController from './MapMarkerController';
 // import MapMarkerController from './MapMarkerController';
 
 const Mapview = () => {
-  const context = useContext(StationContext);
-
-  if (!context) {
-    return <></>;
-  }
-
-  const { station } = context;
+  const { station } = useStationContext();
 
   return (
     <MapWrapper>
       <DynamicMap coordinate={station.stationCoordinate}>
-        {/* <MapMarkerController /> */}
+        <MapMarkerController />
       </DynamicMap>
     </MapWrapper>
   );
