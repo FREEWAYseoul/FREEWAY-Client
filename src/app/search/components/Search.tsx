@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import useSearchBar from '@/app/search/hooks/useStationSearch';
 import { useStation } from '@/common/api/stations';
 
-import ProgressBar from './ProgressBar';
+import ProgressBar from '../../../common/components/ProgressBar';
 import SearchBar from './SearchBar';
 import SearchContents from './SearchContents';
 import SearchLoading from './SearchLoading';

@@ -11,7 +11,7 @@ const PageHeader = ({ title }: Props) => {
   const route = useRouter();
 
   const handleMoveHome = () => {
-    route.push('/');
+    route.back();
   };
 
   return (
