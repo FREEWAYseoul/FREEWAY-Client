@@ -12,7 +12,7 @@ const HeaderIcons = [
   },
   {
     component: <SettingIcon />,
-    path: '/help',
+    path: '/setting',
   },
 ];
 
