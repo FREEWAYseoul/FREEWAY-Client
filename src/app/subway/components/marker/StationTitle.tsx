@@ -6,10 +6,12 @@ import { titleEclipse } from '@/utils/format';
 import Badge from '../Badge';
 
 const StationTitle = ({ line, title, color, type }: StationTitleProps) => {
+  console.log(title);
+
   return (
     <StyledStationTitleWrapper $color={color} $type={type || ''}>
       <Badge lineId={line} isActive={true} />
-      {type !== 'marker' ? titleEclipse(title, 6) : title}
+      {type !== 'marker' ? titleEclipse(title, 6) : title + '역'}
     </StyledStationTitleWrapper>
   );
 };
@@ -17,20 +19,24 @@ const StationTitle = ({ line, title, color, type }: StationTitleProps) => {
 export default StationTitle;
 
 const StyledStationTitleWrapper = styled.div<{ $color: string; $type: string }>`
-  position: absolute;
   box-sizing: border-box;
+  position: absolute;
+  left: 50%;
+  height: 40px;
+
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 4px;
-  left: 50%;
-  height: 40px;
-  line-height: 19px;
+
   border-radius: 30px;
-  border: 5px solid ${({ $color }) => $color};
+  border: 3px solid ${({ $color }) => $color};
   background-color: #fff;
+
   transform: translateX(-50%);
+  line-height: 19px;
   white-space: nowrap;
+
   z-index: 99;
   ${({ $type }) => {
     return $type === 'marker'
@@ -38,8 +44,8 @@ const StyledStationTitleWrapper = styled.div<{ $color: string; $type: string }>`
           padding: 7px 9px 7px 6px;
         `
       : css`
-          padding: 5px 16px;
-          min-width: 113px;
+          padding: 5px 9px 5px 6px;
+          min-width: 120px;
         `;
   }}
 `;

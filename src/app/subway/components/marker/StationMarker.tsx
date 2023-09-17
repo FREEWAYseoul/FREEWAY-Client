@@ -20,7 +20,7 @@ const StationMarker = ({ info, isActive, level }: StationMakerProps) => {
       ) : (
         <StyledStation $color={color.color}>
           <span>{info.stationStatus === '확인 불가' ? '-' : info.availableElevatorsNumber}</span>{' '}
-          <div>{info.stationName}</div>
+          <div>{info.stationName + '역'}</div>
         </StyledStation>
       )}
       <div className='triangle'>
