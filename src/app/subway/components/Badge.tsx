@@ -28,7 +28,6 @@ export default Badge;
 const StyledBadge = styled.span<{ $isActive: boolean; $isText: boolean; $color: string }>`
   cursor: pointer;
   padding: 0 6px;
-  min-width: 20px;
   height: 20px;
   border-radius: 10px;
   font-size: 0.875rem;

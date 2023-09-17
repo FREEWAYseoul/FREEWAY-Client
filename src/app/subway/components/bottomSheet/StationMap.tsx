@@ -29,12 +29,7 @@ const StationMap = ({ title, line }: StationMapProps) => {
         )}
       </div>
       <div className='stationTitleBox' onClick={() => handleChangeStation(station.stationId)}>
-        <StationTitle
-          title={title}
-          line={line}
-          color={color.color}
-          type={isNaN(Number(line)) ? 'marker' : 'title'}
-        />
+        <StationTitle title={title} line={line} color={color.color} type={'title'} />
       </div>
       <div className={`stationLine ${station.nextStation?.stationName ? '' : 'empty'}`}>
         {station.nextStation?.stationName ? (
@@ -81,16 +76,18 @@ const StyledStationMap = styled.div<{ $color: string; $length: number }>`
   }
 
   & > .stationLine {
-    /* flex: 1; */
-    width: 50%;
     position: relative;
     padding: 5px 24px;
+    width: 50%;
     height: 28px;
-    line-height: 20px;
-    color: #fff;
+
     background-color: ${({ $color }) => $color};
-    overflow: hidden;
+
+    color: #fff;
+    font-size: 15px;
+    line-height: 20px;
     text-overflow: ellipsis;
+    overflow: hidden;
 
     & > .activeLine {
       cursor: pointer;
