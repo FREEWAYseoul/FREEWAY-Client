@@ -18,7 +18,7 @@ const DynamicMap = ({ children, coordinate }: DynamicMapProps) => {
   const option = {
     center: targetPoint,
     zoom: 17,
-    minZoom: 14, //지도의 최소 줌 레벨
+    minZoom: 15, //지도의 최소 줌 레벨
   };
   useEffect(() => {
     const map = new naver.maps.Map('map', option);
