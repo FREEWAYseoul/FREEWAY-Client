@@ -69,7 +69,8 @@ const SearchItemWrapper = styled.li<{ $isFocus?: boolean; $type?: 'homepage' | '
     $type === 'homepage'
       ? css`
           margin-bottom: 5px;
-          padding-right: 9px;
+          padding-right: 29px;
+          padding-left: 20px;
           height: 43px;
         `
       : css`
@@ -78,12 +79,14 @@ const SearchItemWrapper = styled.li<{ $isFocus?: boolean; $type?: 'homepage' | '
         `};
 
   width: 100%;
-  font-weight: 600;
+  font-weight: 500;
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   &:hover {
-    background-color: #edf5f5;
+    background-color: ${({ $type }) =>
+      $type !== 'homepage' ? 'rgba(217, 217, 217, 0.4)' : '#f2f4f6'};
     cursor: pointer;
   }
   background-color: ${({ $isFocus }) => ($isFocus ? '#edf5f5' : 'transparent')};
@@ -100,14 +103,14 @@ const Text = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 18px;
-  color: rgba(73, 80, 116, 0.5);
+  color: #434343;
 
   margin-right: 6px;
 `;
 
 const Char = styled.span<{ $isKeyword?: boolean; $type?: 'homepage' | 'searchpage' }>`
-  color: ${({ $isKeyword }) => ($isKeyword ? 'rgba(73, 80, 116, 1)' : 'rgba(73, 80, 116, 0.5)')};
-  color: ${({ $type }) => $type === 'homepage' && 'rgba(73, 80, 116, 1)'};
+  color: ${({ $isKeyword }) => ($isKeyword ? '#434343' : 'rgba(73, 80, 116, 0.5)')};
+  color: ${({ $type }) => ($type === 'homepage' || $type === 'searchpage') && '#434343'};
 `;
 
 const Status = styled.div<StyledStatusProps>`
