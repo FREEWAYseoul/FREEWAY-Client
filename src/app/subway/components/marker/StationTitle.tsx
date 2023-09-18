@@ -6,8 +6,6 @@ import { titleEclipse } from '@/utils/format';
 import Badge from '../Badge';
 
 const StationTitle = ({ line, title, color, type }: StationTitleProps) => {
-  console.log(title);
-
   return (
     <StyledStationTitleWrapper $color={color} $type={type || ''}>
       <Badge lineId={line} isActive={true} />
