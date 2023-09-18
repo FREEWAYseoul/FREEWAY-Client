@@ -21,7 +21,7 @@ const SearchContents = () => {
         return <NotFound>"{keyword}" 검색 결과가 없습니다.</NotFound>;
       }
     } else {
-      return <SearchList label='최근 기록' type={'searchpage'} data={searchHistory} />;
+      return <SearchList label='최근 검색' type={'searchpage'} data={searchHistory} />;
     }
   } else {
     return <VoiceSearchField speachKeyword={searchKeyword} />;

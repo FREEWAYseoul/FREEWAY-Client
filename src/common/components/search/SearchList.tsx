@@ -43,24 +43,25 @@ const StyledListWrapper = styled.ul`
   padding: 0;
   margin: 0;
 
-  overflow-y: hidden;
   width: 100%;
+  height: calc(100vh - 200px);
 
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const StyledLabel = styled.div<{ $type?: 'homepage' | 'searchpage' }>`
   margin-bottom: 15px;
+  padding-left: 20px;
 
   ${({ $type }) =>
     $type === 'searchpage' &&
     css`
       margin-bottom: 0;
-      padding-left: 20px;
       height: 57px;
+      border-bottom: 1px solid rgba(217, 217, 217, 0.5);
     `};
 
   display: flex;

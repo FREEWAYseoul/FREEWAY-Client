@@ -23,10 +23,12 @@ const Home = () => {
   }, [resetKeywords]);
 
   return (
-    <HomeWrapper id='home-container'>
-      <HomeHeader />
-      <HomePageTitle />
-      <HomeSearchBar handleClick={handleSpeech} isListening={listening} />
+    <StyledContainer>
+      <HomeWrapper>
+        <HomeHeader />
+        <HomePageTitle />
+        <HomeSearchBar handleClick={handleSpeech} isListening={listening} />
+      </HomeWrapper>
       <ChildrenWrapper>
         {listening ? (
           <VoiceSearchField speachKeyword={searchKeyword} />
@@ -34,15 +36,18 @@ const Home = () => {
           <HomeSearchHistoryList searchHistory={sliceList(searchHistory)} />
         )}
       </ChildrenWrapper>
-    </HomeWrapper>
+    </StyledContainer>
   );
 };
 
 export default Home;
 
-const HomeWrapper = styled.div`
+const StyledContainer = styled.div`
   width: 100%;
   height: 100%;
+`;
+
+const HomeWrapper = styled.div`
   padding: 0 20px;
 `;
 

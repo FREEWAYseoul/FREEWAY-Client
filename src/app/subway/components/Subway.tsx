@@ -12,14 +12,14 @@ import NaverMapScriptLoader from './map/NaverMapScriptLoader';
 import StationSearchBar from './StationSearchBar';
 
 const Subway = () => {
-  const { selectedStationId } = useContext(SearchContext);
+  const { selectedStationId, keyword } = useContext(SearchContext);
   const { data: station } = useStationInfo(selectedStationId);
 
   return (
     <NaverMapScriptLoader>
+      <StationSearchBar stationName={(keyword || station?.stationName) ?? '서울'} />
       {station && (
         <StationContextProvider initStation={station}>
-          <StationSearchBar station={station} />
           <ContentsView />
           <BottomSheet />
         </StationContextProvider>

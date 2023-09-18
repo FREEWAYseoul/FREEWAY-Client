@@ -21,10 +21,12 @@ const useStationSearch = () => {
   const saveStation = useCallback(
     (selectedStationId: string) => {
       const station = stations?.find((item) => item.stationId == selectedStationId);
+
       if (station) {
-        setSelectedStationId(Number(selectedStationId));
         setKeyword(station.stationName);
         addSearchHistory(station);
+        setSelectedStationId(Number(selectedStationId));
+        console.log(station);
       }
     },
     [stations, setSelectedStationId, setKeyword, addSearchHistory],
@@ -52,9 +54,9 @@ const useStationSearch = () => {
     if (el) el.focus();
   }, []);
 
-  const resetKeywords = () => {
+  const resetKeywords = useCallback(() => {
     setKeyword('');
-  };
+  }, [setKeyword]);
 
   return {
     handleTyping,

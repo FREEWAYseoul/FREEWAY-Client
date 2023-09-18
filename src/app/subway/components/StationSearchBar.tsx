@@ -5,9 +5,12 @@ import useStationSearch from '@/app/search/hooks/useStationSearch';
 import ChevronIcon from '@/assets/icons/chevron.svg';
 import CircleCancelIcon from '@/assets/icons/circle-cancel.svg';
 import Button from '@/common/components/button/Button';
-import { StationDetailProps } from '@/types/stationType';
 
-const StationSearchBar = ({ station }: { station: StationDetailProps }) => {
+type Props = {
+  stationName: string;
+};
+
+const StationSearchBar = ({ stationName }: Props) => {
   const { resetKeywords } = useStationSearch();
   const route = useRouter();
 
@@ -18,7 +21,8 @@ const StationSearchBar = ({ station }: { station: StationDetailProps }) => {
   const handleMoveSearch = (e: React.MouseEvent<HTMLElement>) => {
     const target = e.target;
     const el = target as HTMLElement;
-    if (el.tagName === 'IMG') {
+
+    if (el.tagName !== 'P') {
       resetKeywords();
     }
     route.push('/search');
@@ -29,7 +33,7 @@ const StationSearchBar = ({ station }: { station: StationDetailProps }) => {
       <Button handleOnClick={handleMoveHome}>
         <ChevronIcon />
       </Button>
-      <p onClick={handleMoveSearch}>{station.stationName}</p>
+      <p onClick={handleMoveSearch}>{stationName}</p>
       <Button handleOnClick={handleMoveSearch}>
         <CircleCancelIcon />
       </Button>
