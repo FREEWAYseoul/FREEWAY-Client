@@ -3,8 +3,8 @@ import styled, { css } from 'styled-components';
 import NotFoundIcon from '@/assets/icons/not-found.svg';
 import { SLIDER_RANGE } from '@/common/constants/slide';
 
-const MapDetailView = ({ src, tabPosition }: { src: string; tabPosition: number }) => {
-  const position = SLIDER_RANGE.max - tabPosition;
+const MapDetailView = ({ src }: { src: string }) => {
+  const position = SLIDER_RANGE.min;
 
   return (
     <StyledMapDetailView>
