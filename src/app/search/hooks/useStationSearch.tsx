@@ -23,10 +23,9 @@ const useStationSearch = () => {
       const station = stations?.find((item) => item.stationId == selectedStationId);
 
       if (station) {
+        setSelectedStationId(Number(selectedStationId));
         setKeyword(station.stationName);
         addSearchHistory(station);
-        setSelectedStationId(Number(selectedStationId));
-        console.log(station);
       }
     },
     [stations, setSelectedStationId, setKeyword, addSearchHistory],
