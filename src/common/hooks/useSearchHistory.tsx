@@ -8,7 +8,7 @@ const useLocalStorage = () => {
   const [searchHistory, setSearchHistory] = useState<StationProps[]>([]);
 
   const sliceList = (data: StationProps[]) => {
-    return data.slice(-4);
+    return data.slice(0, 4);
   };
 
   const removeDuplication = (station: StationProps, data: StationProps[]) => {
