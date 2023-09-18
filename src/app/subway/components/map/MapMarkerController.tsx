@@ -11,7 +11,7 @@ import ElevatorMarker from '../marker/ElevatorMarker';
 import StationMarker from '../marker/StationMarker';
 
 const MapMarkerController = () => {
-  const { station, handleShowInfo, handleChangeStation, isShow, handleShowController } =
+  const { station, handleChangeStation, isShow, handleShowController, handleCloseInfo } =
     useStationContext();
 
   const { naverMap, stationMarkers, elevatorMarkers, setStationMarker, trackingMyPosition } =
@@ -45,9 +45,7 @@ const MapMarkerController = () => {
   }, [stationMarkers]);
 
   useEffect(() => {
-    const clickListener = naver.maps.Event.addListener(naverMap, 'click', () =>
-      handleShowController(!isShow),
-    );
+    const clickListener = naver.maps.Event.addListener(naverMap, 'click', handleCloseInfo);
 
     return () => {
       naver.maps.Event.removeListener(clickListener);
@@ -60,7 +58,7 @@ const MapMarkerController = () => {
 
   useEffect(() => {
     const dragListener = naver.maps.Event.addListener(naverMap, 'drag', () =>
-      handleShowInfo(false),
+      handleShowController(false),
     );
     return () => {
       naver.maps.Event.removeListener(dragListener);

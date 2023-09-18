@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 
 import { useStationInfo } from '@/common/api/stations';
-import { SLIDER_RANGE } from '@/common/constants/slide';
+// import { SLIDER_RANGE } from '@/common/constants/slide';
 import { StationDetailProps } from '@/types/stationType';
 
 interface ResultContextProviderProps {
@@ -13,16 +13,11 @@ export interface ReactContextValueProps {
   station: StationDetailProps;
   activeTab: string;
   isShow: boolean;
-  isTabPostion: boolean;
-  isDragging: boolean;
-  tabPosition: number;
+  isDrag: boolean;
   handleChangeTab: (arg1: string) => void;
   handleChangeStation: (arg1: string | number) => void;
-  handleShowInfo: (arg1: boolean) => void;
   handleShowController: (arg1: boolean) => void;
-  handleTouchStart: (event: React.TouchEvent<HTMLDivElement>) => void;
-  handleTouchMove: (event: React.TouchEvent<HTMLDivElement>) => void;
-  handleTouchEnd: () => void;
+  handleCloseInfo: () => void;
 }
 
 const StationContext = createContext<ReactContextValueProps | null>(null);
@@ -30,78 +25,32 @@ const StationContext = createContext<ReactContextValueProps | null>(null);
 const StationContextProvider = ({ children, initStation }: ResultContextProviderProps) => {
   const [station, setStation] = useState<StationDetailProps>(initStation);
   const [isShow, setIsShow] = useState<boolean>(true);
+  const [isDrag, setIsDrag] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<string>('엘리베이터');
   const [stationId, setStationId] = useState<number>(Number(initStation.stationId));
   const { data, isLoading } = useStationInfo(stationId);
-
-  // 드래그 슬라이드 관련
-  const [isTabPostion, setIsTabPosition] = useState<boolean>(false);
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragStartY, setDragStartY] = useState(0);
-  const [tabPosition, setTabPosition] = useState(0);
-
-  const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
-    setIsDragging(true);
-    setDragStartY(event.touches[0].clientY);
-  };
-
-  const handleTouchMove = (event: React.TouchEvent<HTMLDivElement>) => {
-    if (isDragging) {
-      const dragDistance = event.touches[0].clientY - dragStartY;
-      // 숨겨졌을 경우
-      if (isTabPostion) {
-        // 노출되 있을 경우
-        if (dragDistance <= -SLIDER_RANGE.min && dragDistance >= -SLIDER_RANGE.max) {
-          setTabPosition(SLIDER_RANGE.max + dragDistance);
-        }
-      } else {
-        if (dragDistance >= SLIDER_RANGE.min && dragDistance <= SLIDER_RANGE.max) {
-          setTabPosition(dragDistance);
-        }
-      }
-    }
-  };
-
-  const handleTouchEnd = () => {
-    setIsDragging(false);
-    // 숨겨졌을 경우
-    if (isTabPostion && tabPosition < SLIDER_RANGE.max - 20) {
-      setTabPosition(SLIDER_RANGE.min);
-      setIsTabPosition(false);
-    } else if (!isTabPostion && tabPosition > SLIDER_RANGE.min + 20) {
-      // 노출되 있을 경우
-      setTabPosition(SLIDER_RANGE.max);
-      setIsTabPosition(true);
-    }
-  };
-  //
 
   const handleChangeTab = (title: string) => {
     setActiveTab(title);
   };
 
-  const handleShowInfo = (flag: boolean) => {
-    if (flag) {
-      setTabPosition(SLIDER_RANGE.min);
-    } else {
-      setTabPosition(SLIDER_RANGE.max);
-    }
-    setIsTabPosition(!flag);
-  };
-
   const handleShowController = (flag: boolean) => {
-    setIsShow(flag);
+    setIsDrag(!flag);
   };
 
   const handleChangeStation = async (stationId: number | string) => {
     setStationId(Number(stationId));
   };
 
+  const handleCloseInfo = () => {
+    setIsShow(!isShow);
+  };
+
   useEffect(() => {
     if (!isLoading && data) {
       setStation(data);
-      setIsTabPosition(false);
-      setTabPosition(SLIDER_RANGE.min);
+      setIsDrag(false);
+      setIsShow(true);
     }
   }, [isLoading, data]);
 
@@ -109,16 +58,11 @@ const StationContextProvider = ({ children, initStation }: ResultContextProvider
     station,
     activeTab,
     isShow,
-    isTabPostion,
-    isDragging,
-    tabPosition,
+    isDrag,
     handleChangeTab,
     handleChangeStation,
-    handleShowInfo,
     handleShowController,
-    handleTouchStart,
-    handleTouchMove,
-    handleTouchEnd,
+    handleCloseInfo,
   };
 
   return <StationContext.Provider value={contextValue}>{children}</StationContext.Provider>;
