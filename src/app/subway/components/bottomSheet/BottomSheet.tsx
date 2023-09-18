@@ -1,5 +1,5 @@
 import { motion, useAnimation } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { useStationContext } from '@/common/context/StationContext';
@@ -12,8 +12,7 @@ const BottomSheet = () => {
   const { station } = useStationContext();
   const controls = useAnimation();
 
-  const [isOpen, setIsOpen] = useState(false);
-  const prevIsOpen = useRef<boolean>();
+  const [isOpen, setIsOpen] = useState(true);
 
   const vh = window.innerHeight;
 
@@ -25,8 +24,24 @@ const BottomSheet = () => {
     setIsOpen(true);
   };
 
-  const onDragEnd = (event: DragEvent, info: { velocity: { y: number }; point: { y: number } }) => {
-    const shouldClose = info.velocity.y > 20 || (info.velocity.y >= 0 && info.point.y > 45);
+  /**
+   * velocity : drag 속도
+   * delta : 이동한 정도(?)
+   */
+  const onDragEnd = (e: DragEvent, info: { delta: { y: number }; velocity: { y: number } }) => {
+    const { delta, velocity } = info;
+
+    const shouldClose = (() => {
+      if (velocity.y > 0) {
+        // velocity > 0 아래로 드래그
+        return true;
+      } else if (velocity.y < 0) {
+        // velocity < 0 위로 드래그
+        return false;
+      } else {
+        return !(0 >= delta.y);
+      }
+    })();
 
     if (shouldClose) {
       controls.start('hidden');
@@ -38,16 +53,12 @@ const BottomSheet = () => {
   };
 
   useEffect(() => {
-    prevIsOpen.current = isOpen;
-  }, [isOpen]);
-
-  useEffect(() => {
-    if (prevIsOpen && !isOpen) {
+    if (isOpen) {
       controls.start('visible');
-    } else if (!prevIsOpen && isOpen) {
+    } else {
       controls.start('hidden');
     }
-  }, [controls, isOpen, prevIsOpen]);
+  }, [controls, isOpen]);
 
   return (
     <StyledBottomSheet
