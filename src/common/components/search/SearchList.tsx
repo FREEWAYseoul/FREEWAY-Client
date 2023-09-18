@@ -54,15 +54,18 @@ const StyledListWrapper = styled.ul`
 
 const StyledLabel = styled.div<{ $type?: 'homepage' | 'searchpage' }>`
   margin-bottom: 15px;
-  padding-left: 20px;
 
   ${({ $type }) =>
-    $type === 'searchpage' &&
-    css`
-      margin-bottom: 0;
-      height: 57px;
-      border-bottom: 1px solid rgba(217, 217, 217, 0.5);
-    `};
+    $type === 'searchpage'
+      ? css`
+          padding-left: 17px;
+          margin-bottom: 0;
+          height: 57px;
+          border-bottom: 1px solid rgba(217, 217, 217, 0.5);
+        `
+      : css`
+          padding-left: 24px;
+        `};
 
   display: flex;
   justify-content: flex-start;

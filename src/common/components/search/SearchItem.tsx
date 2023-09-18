@@ -70,7 +70,7 @@ const SearchItemWrapper = styled.li<{ $isFocus?: boolean; $type?: 'homepage' | '
       ? css`
           margin-bottom: 5px;
           padding-right: 29px;
-          padding-left: 20px;
+          padding-left: 24px;
           height: 43px;
         `
       : css`

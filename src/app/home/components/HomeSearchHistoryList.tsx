@@ -24,13 +24,12 @@ const StyledHomeSearchListWrapper = styled.div`
   width: 100%;
   max-height: 220px;
   width: 100%;
-
-  padding-left: 4px;
 `;
 
 const HomeNotFoundBox = styled.div`
-  width: 100%;
+  width: calc(100% - 40px);
   min-height: 206px;
+  margin: 0 auto;
 
   background-color: #f2f4f6;
   border-radius: 10px;
