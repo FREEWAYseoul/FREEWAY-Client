@@ -16,10 +16,11 @@ const AlertItem = ({ info }: { info: SafetyAlertItemProps }) => {
 export default AlertItem;
 
 const StyledAlertItem = styled.div`
-  padding: 10px 0 20px;
+  padding-bottom: 20px;
   color: #434343;
   font-size: 1rem;
   line-height: 24px;
+
   & > span {
     color: #808080;
     font-weight: 300;
