@@ -13,7 +13,7 @@ interface BadgeProps {
 }
 
 const StationHeader = () => {
-  const { station, isTabPostion, handleChangeStation, handleShowInfo } = useStationContext();
+  const { station, handleChangeStation } = useStationContext();
   const { data: stationData, isLoading } = useStation();
   const [badges, setBadges] = useState<BadgeProps[]>([]);
 
@@ -39,7 +39,7 @@ const StationHeader = () => {
 
   return (
     <StyledStationInfoHeader>
-      <div className='sliceBar' onClick={() => handleShowInfo(isTabPostion)}>
+      <div className='sliceBar'>
         <div className='bar' />
       </div>
       <div className='badgeBox'>
@@ -66,7 +66,7 @@ const StyledStationInfoHeader = styled.div`
   padding: 0 24px 11px 16px;
 
   & > .sliceBar {
-    cursor: pointer;
+    cursor: ns-resize;
     width: 100%;
     padding: 6px 0px 3px 8px;
     height: 13px;

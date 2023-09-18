@@ -5,14 +5,9 @@ import { useStationContext } from '@/common/context/StationContext';
 
 import StationTitle from '../marker/StationTitle';
 
-interface StationMapProps {
-  title: string;
-  line: number;
-}
-
-const StationMap = ({ title, line }: StationMapProps) => {
+const StationMap = () => {
   const { station, handleChangeStation } = useStationContext();
-  const color = STATION_LINE_COLORS[line];
+  const color = STATION_LINE_COLORS[station.lineId];
 
   return (
     <StyledStationMap $color={color?.color} $length={station.stationName.length}>
@@ -29,7 +24,12 @@ const StationMap = ({ title, line }: StationMapProps) => {
         )}
       </div>
       <div className='stationTitleBox' onClick={() => handleChangeStation(station.stationId)}>
-        <StationTitle title={title} line={line} color={color.color} type={'title'} />
+        <StationTitle
+          title={station.stationName}
+          line={station.lineId}
+          color={color.color}
+          type={'title'}
+        />
       </div>
       <div className={`stationLine ${station.nextStation?.stationName ? '' : 'empty'}`}>
         {station.nextStation?.stationName ? (

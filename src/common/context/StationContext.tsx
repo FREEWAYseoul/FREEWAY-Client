@@ -13,16 +13,11 @@ export interface ReactContextValueProps {
   station: StationDetailProps;
   activeTab: string;
   isShow: boolean;
-  // isTabPostion: boolean;
-  // isDragging: boolean;
-  // tabPosition: number;
+  isDrag: boolean;
   handleChangeTab: (arg1: string) => void;
   handleChangeStation: (arg1: string | number) => void;
-  // handleShowInfo: (arg1: boolean) => void;
-  // handleShowController: (arg1: boolean) => void;
-  // handleTouchStart: (event: React.TouchEvent<HTMLDivElement>) => void;
-  // handleTouchMove: (event: React.TouchEvent<HTMLDivElement>) => void;
-  // handleTouchEnd: () => void;
+  handleShowController: (arg1: boolean) => void;
+  handleCloseInfo: () => void;
 }
 
 const StationContext = createContext<ReactContextValueProps | null>(null);
@@ -30,6 +25,7 @@ const StationContext = createContext<ReactContextValueProps | null>(null);
 const StationContextProvider = ({ children, initStation }: ResultContextProviderProps) => {
   const [station, setStation] = useState<StationDetailProps>(initStation);
   const [isShow, setIsShow] = useState<boolean>(true);
+  const [isDrag, setIsDrag] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<string>('엘리베이터');
   const [stationId, setStationId] = useState<number>(Number(initStation.stationId));
   const { data, isLoading } = useStationInfo(stationId);
@@ -39,18 +35,22 @@ const StationContextProvider = ({ children, initStation }: ResultContextProvider
   };
 
   const handleShowController = (flag: boolean) => {
-    setIsShow(flag);
+    setIsDrag(!flag);
   };
 
   const handleChangeStation = async (stationId: number | string) => {
     setStationId(Number(stationId));
   };
 
+  const handleCloseInfo = () => {
+    setIsShow(!isShow);
+  };
+
   useEffect(() => {
     if (!isLoading && data) {
       setStation(data);
-      // setIsTabPosition(false);
-      // setTabPosition(SLIDER_RANGE.min);
+      setIsDrag(false);
+      setIsShow(true);
     }
   }, [isLoading, data]);
 
@@ -58,9 +58,11 @@ const StationContextProvider = ({ children, initStation }: ResultContextProvider
     station,
     activeTab,
     isShow,
+    isDrag,
     handleChangeTab,
     handleChangeStation,
     handleShowController,
+    handleCloseInfo,
   };
 
   return <StationContext.Provider value={contextValue}>{children}</StationContext.Provider>;

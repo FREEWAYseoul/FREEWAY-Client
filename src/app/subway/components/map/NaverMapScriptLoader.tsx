@@ -1,6 +1,4 @@
-import { PropsWithChildren } from 'react';
-
-const NaverMapScriptLoader = ({ children }: PropsWithChildren) => {
+const NaverMapScriptLoader = () => {
   const NAVER_CLIENT_ID = process.env.NEXT_PUBLIC_NAVER_CLIENT_ID;
   const NAVER_MAP_SCRIPT_ID = 'naverMapScript';
 
@@ -11,7 +9,6 @@ const NaverMapScriptLoader = ({ children }: PropsWithChildren) => {
         src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${NAVER_CLIENT_ID}`}
         async
       />
-      {children}
     </>
   );
 };

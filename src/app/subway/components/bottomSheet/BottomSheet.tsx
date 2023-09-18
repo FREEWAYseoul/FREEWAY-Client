@@ -9,9 +9,8 @@ import StationHeader from './StationHeader';
 import StationMap from './StationMap';
 
 const BottomSheet = () => {
-  const { station } = useStationContext();
+  const { isShow, isDrag, handleShowController } = useStationContext();
   const controls = useAnimation();
-
   const [isOpen, setIsOpen] = useState(true);
 
   const vh = window.innerHeight;
@@ -49,16 +48,29 @@ const BottomSheet = () => {
     } else {
       controls.start('visible');
       onOpen();
+      handleShowController(true);
     }
   };
 
   useEffect(() => {
-    if (isOpen) {
-      controls.start('visible');
+    if (isDrag) {
+      onClose();
     } else {
-      controls.start('hidden');
+      onOpen();
     }
-  }, [controls, isOpen]);
+  }, [isDrag]);
+
+  useEffect(() => {
+    if (isShow) {
+      if (isOpen) {
+        controls.start('visible');
+      } else {
+        controls.start('hidden');
+      }
+    } else {
+      controls.start('closed');
+    }
+  }, [controls, isOpen, isShow, handleShowController]);
 
   return (
     <StyledBottomSheet
@@ -81,7 +93,7 @@ const BottomSheet = () => {
     >
       <StationHeader />
       <Divider />
-      <StationMap title={station.stationName} line={station.lineId} />
+      <StationMap />
       <StationButtonGroup />
     </StyledBottomSheet>
   );

@@ -1,6 +1,7 @@
 'use client';
 
 import { useContext } from 'react';
+import styled from 'styled-components';
 
 import { useStationInfo } from '@/common/api/stations';
 import { SearchContext } from '@/common/context/SearchContext';
@@ -16,16 +17,27 @@ const Subway = () => {
   const { data: station } = useStationInfo(selectedStationId);
 
   return (
-    <NaverMapScriptLoader>
-      <StationSearchBar stationName={(keyword || station?.stationName) ?? '서울'} />
-      {station && (
-        <StationContextProvider initStation={station}>
-          <ContentsView />
-          <BottomSheet />
-        </StationContextProvider>
-      )}
-    </NaverMapScriptLoader>
+    <>
+      <NaverMapScriptLoader />
+      <StyledContainer>
+        <StationSearchBar stationName={(keyword || station?.stationName) ?? '서울'} />
+        {station && (
+          <StationContextProvider initStation={station}>
+            <ContentsView />
+            <BottomSheet />
+          </StationContextProvider>
+        )}
+      </StyledContainer>
+    </>
   );
 };
 
 export default Subway;
+
+const StyledContainer = styled.div`
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+`;
