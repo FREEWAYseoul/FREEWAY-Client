@@ -15,6 +15,8 @@ jobs:
 
       - name: Sync with Fork
         run: |
+          git config --global user.name 'bbung'
+          git config --global user.email 'tjd123123@naver.com'
           git remote add fork ${{ secrets.SYNC_REPO}}
           git fetch fork
           git checkout main
