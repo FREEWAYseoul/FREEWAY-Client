@@ -21,6 +21,6 @@ jobs:
           git fetch fork
           git checkout main
           git merge --allow-unrelated-histories fork/main
-          git push origin main
+          git push origin main --force
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
