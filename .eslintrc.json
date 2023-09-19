@@ -3,6 +3,7 @@
     "next/core-web-vitals",
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
+    "plugin:storybook/recommended",
     "prettier"
   ],
   "plugins": [
@@ -33,24 +34,29 @@
       }
     ],
     "react/jsx-first-prop-new-line": "error",
-    "comma-dangle": [
-      "error",
-      {
-        "arrays": "always-multiline",
-        "objects": "always-multiline",
-        "imports": "never",
-        "exports": "never",
-        "functions": "never"
-      }
-    ],
-    "indent": ["error", 2],
+    "comma-dangle": "off",
+    "indent": "off",
     "quotes": ["error", "single"],
     "eol-last": "error",
     "semi": ["error", "always"],
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
-    "no-unused-vars": ["error", { "vars": "all", "args": "none", "ignoreRestSiblings": false }],
+    "no-unused-vars": [
+      "error",
+      {
+        "vars": "all",
+        "args": "none",
+        "ignoreRestSiblings": false
+      }
+    ],
     "unused-imports/no-unused-imports-ts": ["error"],
-    "comma-spacing": ["error", { "before": false, "after": true }]
+    "react-hooks/exhaustive-deps": "warn",
+    "comma-spacing": [
+      "error",
+      {
+        "before": false,
+        "after": true
+      }
+    ]
   }
 }
