@@ -18,15 +18,16 @@ const Subway = () => {
 
   return (
     <>
-      <NaverMapScriptLoader />
       <StyledContainer>
         <StationSearchBar stationName={(keyword || station?.stationName) ?? '서울'} />
-        {station && (
-          <StationContextProvider initStation={station}>
-            <ContentsView />
-            <BottomSheet />
-          </StationContextProvider>
-        )}
+        <NaverMapScriptLoader>
+          {station && (
+            <StationContextProvider initStation={station}>
+              <ContentsView />
+              <BottomSheet />
+            </StationContextProvider>
+          )}
+        </NaverMapScriptLoader>
       </StyledContainer>
     </>
   );
