@@ -18,7 +18,7 @@ jobs:
           git remote add fork ${{ secrets.SYNC_REPO}}
           git fetch fork
           git checkout main
-          git merge fork/main
+          git merge --allow-unrelated-histories fork/main
           git push origin main
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
