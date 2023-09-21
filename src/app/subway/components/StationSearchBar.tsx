@@ -1,4 +1,5 @@
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 
 import useStationSearch from '@/app/search/hooks/useStationSearch';
@@ -27,6 +28,11 @@ const StationSearchBar = ({ stationName }: Props) => {
     }
     route.push('/search');
   };
+
+  useEffect(() => {
+    route.prefetch('/');
+    route.prefetch('/search');
+  }, [route]);
 
   return (
     <StyledStationSearchBar>

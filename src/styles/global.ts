@@ -9,11 +9,11 @@ const GlobalStyle = createGlobalStyle`
 
   @font-face {
     font-family: 'Pretendard';
-    src: url('/fonts/PretendardVariable.woff2');
+    src: url('/fonts/PretendardVariable.woff2') format('woff2');
   }
 
   *{
-    font-family: Pretendard;
+    font-family: Pretendard !important;
     box-sizing: border-box;
   }
 

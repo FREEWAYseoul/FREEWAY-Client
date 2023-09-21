@@ -2,12 +2,10 @@
 
 import 'react-notion/src/styles.css';
 
-import { usePathname } from 'next/navigation';
 import { NotionRenderer } from 'react-notion';
 import styled from 'styled-components';
 
 import { useNotionPage } from '@/common/api/notion';
-import ProgressBar from '@/common/components/ProgressBar';
 
 const iframeData: { [key: string]: string } = {
   locationAgreement: '53817fd469a24dcb8ca2f1094002a39c',
@@ -15,21 +13,18 @@ const iframeData: { [key: string]: string } = {
   library: '2e50ba5f720b4d77a9a7c1e84b529867',
 };
 
-const IframeView = () => {
-  const pathname = usePathname();
-  const name = pathname.split('/')[2] ?? '';
+interface Props {
+  path: string;
+}
 
-  const { data, isLoading } = useNotionPage(iframeData[name]);
+const IframeView = ({ path }: Props) => {
+  const { data } = useNotionPage(iframeData[path]);
 
   return (
     <>
-      {isLoading || data === undefined ? (
-        <ProgressBar />
-      ) : (
-        <StyledWrapper>
-          <NotionRenderer blockMap={data} fullPage={true} hideHeader={true} />
-        </StyledWrapper>
-      )}
+      <StyledWrapper>
+        {data !== undefined && <NotionRenderer blockMap={data} fullPage={true} hideHeader={true} />}
+      </StyledWrapper>
     </>
   );
 };
