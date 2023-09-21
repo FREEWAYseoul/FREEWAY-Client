@@ -38,6 +38,10 @@ const SearchItem = ({ name, status, id, line, isFocus, type, keyword }: SearchIt
   };
 
   useEffect(() => {
+    route.prefetch('/subway');
+  }, [route]);
+
+  useEffect(() => {
     setSVG(convertStationIdToSVG(line));
   }, [line]);
 

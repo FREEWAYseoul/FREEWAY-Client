@@ -1,24 +1,19 @@
-'use client';
-
-import styled from 'styled-components';
+import { Suspense } from 'react';
 
 import PageHeader from '@/common/components/PageHeader';
+import ProgressBar from '@/common/components/ProgressBar';
 
 import IframeView from '../components/IframeView';
 
-const page = () => {
+const page = ({ params }: { params: { name: string } }) => {
   return (
-    <StyledContainer>
+    <>
       <PageHeader title='설정' />
-      <IframeView />
-    </StyledContainer>
+      <Suspense fallback={<ProgressBar />}>
+        <IframeView path={params.name} />
+      </Suspense>
+    </>
   );
 };
 
 export default page;
-
-const StyledContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  background: #f2f4f6;
-`;
