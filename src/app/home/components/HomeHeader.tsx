@@ -1,4 +1,5 @@
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 
 import NotiIcon from '@/assets/icons/bell.svg';
@@ -18,6 +19,10 @@ const HeaderIcons = [
 
 const HomeHeader = () => {
   const route = useRouter();
+
+  useEffect(() => {
+    HeaderIcons.forEach((item) => route.prefetch(item.path));
+  }, [route]);
 
   return (
     <>
