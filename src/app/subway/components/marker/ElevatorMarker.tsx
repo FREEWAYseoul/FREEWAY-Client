@@ -83,7 +83,7 @@ const StyledElevator = styled.div<{ $status: string }>`
   transform: translateX(-50%);
   white-space: nowrap;
 
-  & > img {
+  & > svg {
     height: 20px;
     min-width: 20px;
   }
