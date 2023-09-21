@@ -11,8 +11,9 @@ const getNotionPageData = async <T>(pageId: string) => {
 export const useNotionPage = (pageId: string) => {
   return useQuery<BlockMapType>({
     queryKey: ['notion', pageId],
-    queryFn: () => getNotionPageData<BlockMapType>(pageId),
-    retry: 1,
-    retryDelay: 3000,
+    queryFn: () => getNotionPageData(pageId),
+    retry: 0,
+    suspense: true,
+    staleTime: Infinity,
   });
 };
