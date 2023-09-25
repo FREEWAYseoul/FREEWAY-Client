@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect } from 'react';
-import styled from 'styled-components';
 
 import useSearchBar from '@/app/search/hooks/useStationSearch';
 import { useStation } from '@/common/api/stations';
@@ -20,31 +19,18 @@ const Search = () => {
   }, [focusOnSearchInput]);
 
   return (
-    <SearchWrapper id='search-container'>
+    <>
       <SearchBar />
-      <DropdownBox>
-        {isLoading ? (
-          <>
-            <ProgressBar />
-            <SearchLoading />
-          </>
-        ) : (
-          <SearchContents />
-        )}
-      </DropdownBox>
-    </SearchWrapper>
+      {isLoading ? (
+        <>
+          <ProgressBar />
+          <SearchLoading />
+        </>
+      ) : (
+        <SearchContents />
+      )}
+    </>
   );
 };
 
 export default Search;
-
-const SearchWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  background-color: #f2f4f6;
-`;
-
-const DropdownBox = styled.div`
-  max-height: 50%;
-  width: 100%;
-`;

@@ -89,7 +89,7 @@ const BottomSheet = () => {
         closed: { y: vh },
       }}
       dragConstraints={{ top: 150 }}
-      dragElastic={0.4}
+      dragElastic={0.1}
     >
       <StationHeader />
       <Divider />
