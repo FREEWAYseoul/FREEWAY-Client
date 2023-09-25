@@ -6,6 +6,7 @@ import META_DATA from '@/common/constants/meatadata';
 
 import LayoutWrapper from '../common/LayoutWrapper';
 import GlobalStyle from '../styles/global';
+import Ga from './Ga';
 import Provider from './Provider';
 import StyledComponentsRegistry from './registry';
 
@@ -31,6 +32,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
     <html>
       <head>
         <link rel='icon' href='/logo.svg' />
+        <Ga />
       </head>
       <body className={Pretendard.className}>
         <Provider>
