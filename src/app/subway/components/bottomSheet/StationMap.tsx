@@ -85,7 +85,7 @@ const StyledStationMap = styled.div<{ $color: string; $length: number }>`
 
     color: #fff;
     font-size: 15px;
-    line-height: 20px;
+    line-height: 18px;
     text-overflow: ellipsis;
     overflow: hidden;
 
