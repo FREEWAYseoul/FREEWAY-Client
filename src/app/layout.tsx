@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import localFont from 'next/font/local';
 import { PropsWithChildren } from 'react';
 
 import META_DATA from '@/common/constants/meatadata';
@@ -21,13 +22,17 @@ export const metadata: Metadata = {
   },
 };
 
+const Pretendard = localFont({
+  src: '../../public/fonts/PretendardVariable.woff2',
+});
+
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html>
       <head>
         <link rel='icon' href='/logo.svg' />
       </head>
-      <body>
+      <body className={Pretendard.className}>
         <Provider>
           <StyledComponentsRegistry>
             <LayoutWrapper>
