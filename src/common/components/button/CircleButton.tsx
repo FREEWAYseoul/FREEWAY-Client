@@ -1,7 +1,7 @@
 'use client';
 
 import { PropsWithChildren } from 'react';
-import { css, styled } from 'styled-components';
+import styled, { css } from 'styled-components';
 
 type Props = {
   size?: number;
