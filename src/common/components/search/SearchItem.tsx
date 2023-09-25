@@ -122,7 +122,7 @@ const Status = styled.div<StyledStatusProps>`
   padding: 4px 8px;
   height: 21px;
   border-radius: 30px;
-  line-height: 16px;
+  line-height: 14px;
   font-size: 12px;
   font-weight: bold;
 
