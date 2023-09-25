@@ -22,6 +22,7 @@ const HomeHeader = () => {
 
   useEffect(() => {
     HeaderIcons.forEach((item) => route.prefetch(item.path));
+    route.prefetch('/search');
   }, [route]);
 
   return (

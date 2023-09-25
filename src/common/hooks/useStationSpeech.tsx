@@ -1,5 +1,6 @@
 import 'regenerator-runtime/runtime';
 
+import { useRouter } from 'next/navigation';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
@@ -13,6 +14,7 @@ const useStationSpeech = () => {
   const { transcript, listening, resetTranscript } = useSpeechRecognition();
   const { data: stations } = useStation();
   const [searchKeyword, setSearchKeyword] = useState('');
+  const route = useRouter();
 
   const startListening = useCallback(() => {
     SpeechRecognition.startListening({ language: 'ko-KR' });
@@ -52,8 +54,9 @@ const useStationSpeech = () => {
       }
 
       setSelectedStationId(Number(selectedStation.stationId));
+      route.push('/subway');
     }
-  }, [searchKeyword, listening, stations, setSelectedStationId]);
+  }, [searchKeyword, listening, stations, setSelectedStationId, route]);
 
   useEffect(() => {
     setSearchKeyword(transcript.replace(/\s/g, '').replace(/역$/, '').trim());
