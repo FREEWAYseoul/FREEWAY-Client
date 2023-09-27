@@ -12,6 +12,5 @@ export const useNotification = () => {
   return useQuery<SafetyAlertProps[]>(['notifications'], getNotificationData, {
     staleTime: 1000 * 60,
     cacheTime: 1000 * 60 * 5,
-    suspense: true,
   });
 };

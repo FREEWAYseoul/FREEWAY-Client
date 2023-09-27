@@ -1,6 +1,6 @@
 import Notification from './components/Notification';
 
-const page = async () => {
+const page = () => {
   return (
     <>
       <Notification />

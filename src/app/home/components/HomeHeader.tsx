@@ -5,7 +5,8 @@ import styled from 'styled-components';
 import NotiIcon from '@/assets/icons/bell.svg';
 import SettingIcon from '@/assets/icons/gear.svg';
 import Button from '@/common/components/button/Button';
-// import ToastMessage from '@/common/components/ToastMessage';
+import ToastMessage from '@/common/components/toast/ToastMessage';
+import useToast from '@/common/hooks/useToast';
 
 const HeaderIcons = [
   {
@@ -20,7 +21,15 @@ const HeaderIcons = [
 
 const HomeHeader = () => {
   const route = useRouter();
+  const { message, isOpen } = useToast();
 
+  const handleMoveNotification = () => {
+    route.push('/notification');
+  };
+
+  /**
+   * prefetch
+   */
   useEffect(() => {
     HeaderIcons.forEach((item) => route.prefetch(item.path));
     route.prefetch('/search');
@@ -29,11 +38,7 @@ const HomeHeader = () => {
   return (
     <>
       <HomePageHeader>
-        {/* <ToastMessage
-          content='추석 연휴, 지하철 운행 조정 🚇추석연휴기간 열차운행계획이 조정됩니다.'
-          onClick={() => console.log(123)}
-          isOpen={false}
-        /> */}
+        <ToastMessage content={message} onClick={handleMoveNotification} isOpen={isOpen} />
         {HeaderIcons.map((item, idx) => (
           <Button key={idx} height={30} handleOnClick={() => route.push(item.path)}>
             {item.component}

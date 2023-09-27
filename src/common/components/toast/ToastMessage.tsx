@@ -1,3 +1,5 @@
+'use client';
+
 import styled, { keyframes } from 'styled-components';
 
 import NotiIcon from '@/assets/icons/white-bell.svg';
@@ -14,14 +16,21 @@ type WrapperProps = {
 
 const ToastMessage = ({ content, onClick, isOpen }: ToastMessageProps) => {
   return (
-    <StyledToastMessageWrapper onClick={onClick} isOpen={isOpen}>
-      <StyledToastMessageLeftSection>
-        <NotiIcon style={{ width: '18px', height: '18px', fill: '#ffffff' }} onClick={onClick} />
-      </StyledToastMessageLeftSection>
-      <StyledToastMessageRightSection>
-        <StyledToastMessageContent>{content}</StyledToastMessageContent>
-      </StyledToastMessageRightSection>
-    </StyledToastMessageWrapper>
+    <>
+      {content && (
+        <StyledToastMessageWrapper onClick={onClick} isOpen={isOpen}>
+          <StyledToastMessageLeftSection>
+            <NotiIcon
+              style={{ width: '18px', height: '18px', fill: '#ffffff' }}
+              onClick={onClick}
+            />
+          </StyledToastMessageLeftSection>
+          <StyledToastMessageRightSection>
+            <StyledToastMessageContent>{content}</StyledToastMessageContent>
+          </StyledToastMessageRightSection>
+        </StyledToastMessageWrapper>
+      )}
+    </>
   );
 };
 
@@ -46,11 +55,13 @@ const fadeOut = keyframes`
   to {
     opacity: 0;
     transform: translateY(-10%);
+    display: none;
   }
 `;
 
 const StyledToastMessageWrapper = styled.div<WrapperProps>`
   position: absolute;
+  top: 0;
   z-index: 99;
 
   width: inherit;
@@ -64,7 +75,7 @@ const StyledToastMessageWrapper = styled.div<WrapperProps>`
   opacity: 0;
 
   animation-name: ${(props) => (props.isOpen ? fadeIn : fadeOut)};
-  animation-duration: 1s;
+  animation-duration: 2s;
   animation-fill-mode: forwards;
 `;
 
