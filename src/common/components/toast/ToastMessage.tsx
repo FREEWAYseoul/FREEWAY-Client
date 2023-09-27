@@ -70,7 +70,6 @@ const StyledToastMessageWrapper = styled.div<WrapperProps>`
   background: rgba(78, 89, 104, 0.95);
   border-radius: 17.3333px;
   color: #ffffff;
-  font-weight: bold;
   display: flex;
   opacity: 0;
 
@@ -88,7 +87,7 @@ const StyledToastMessageLeftSection = styled.section`
   padding-top: 14px;
 `;
 const StyledToastMessageRightSection = styled.section`
-  width: 283px;
+  font-weight: 400;
 `;
 
 const StyledToastMessageContent = styled.div`
