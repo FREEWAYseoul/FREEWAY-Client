@@ -1,19 +1,9 @@
-import { SafetyAlertProps } from '@/types/alertType';
-
 import Notification from './components/Notification';
 
-const getNotificationData = async (): Promise<SafetyAlertProps[]> => {
-  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
-  const res = await fetch(BASE_URL + '/api/notifications', { next: { revalidate: 60 } });
-  return res.json();
-};
-
-const page = async () => {
-  const data = await getNotificationData();
-
+const page = () => {
   return (
     <>
-      <Notification notifications={data} />
+      <Notification />
     </>
   );
 };

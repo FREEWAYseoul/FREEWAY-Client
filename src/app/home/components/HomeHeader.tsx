@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import NotiIcon from '@/assets/icons/bell.svg';
 import SettingIcon from '@/assets/icons/gear.svg';
 import Button from '@/common/components/button/Button';
+import ToastMessage from '@/common/components/toast/ToastMessage';
+import useToast from '@/common/hooks/useToast';
 
 const HeaderIcons = [
   {
@@ -19,7 +21,15 @@ const HeaderIcons = [
 
 const HomeHeader = () => {
   const route = useRouter();
+  const { message, isOpen } = useToast();
 
+  const handleMoveNotification = () => {
+    route.push('/notification');
+  };
+
+  /**
+   * prefetch
+   */
   useEffect(() => {
     HeaderIcons.forEach((item) => route.prefetch(item.path));
     route.prefetch('/search');
@@ -28,6 +38,7 @@ const HomeHeader = () => {
   return (
     <>
       <HomePageHeader>
+        <ToastMessage content={message} onClick={handleMoveNotification} isOpen={isOpen} />
         {HeaderIcons.map((item, idx) => (
           <Button key={idx} height={30} handleOnClick={() => route.push(item.path)}>
             {item.component}
