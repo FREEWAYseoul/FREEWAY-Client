@@ -2,19 +2,18 @@
 
 import styled from 'styled-components';
 
-import { SafetyAlertProps } from '../../../types/alertType';
+import { SafetyAlertProps } from '@/types/alertType';
+
 import SafetyAlertBox from './SafetyAlertBox';
 
-type Props = {
-  notifications: SafetyAlertProps[];
-};
+interface Props {
+  notifications?: SafetyAlertProps[];
+}
 
 const SafetyContents = ({ notifications }: Props) => {
   return (
     <StyledContents>
-      {notifications.map((info: SafetyAlertProps, idx) => (
-        <SafetyAlertBox key={idx} info={info} />
-      ))}
+      {notifications && notifications.map((info, idx) => <SafetyAlertBox key={idx} info={info} />)}
     </StyledContents>
   );
 };

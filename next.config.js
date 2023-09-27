@@ -22,6 +22,9 @@ const nextConfig = {
       },
     ];
   },
+  images: {
+    domains: ['freeway-seoul.vercel.app'],
+  },
 };
 
 module.exports = nextConfig;
