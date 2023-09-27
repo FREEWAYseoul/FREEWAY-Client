@@ -32,6 +32,10 @@ export default function RootLayout({ children }: PropsWithChildren) {
     <html>
       <head>
         <link rel='icon' href='/logo.svg' />
+        <meta
+          name='google-site-verification'
+          content='tsWZ_rEgdfy0DcIZITB3qRExNdPtoBcIXOPavJQQ9Sk'
+        />
         <Ga />
       </head>
       <body className={Pretendard.className}>
