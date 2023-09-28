@@ -11,8 +11,8 @@ const SafetyAlertBox = ({ info }: { info: SafetyAlertProps }) => {
   return (
     <StyledSafetyAlrertBox>
       <StyledAlertBoxDate>{dateFormat(info.date)}</StyledAlertBoxDate>
-      {info.notifications.map((item: SafetyAlertItemProps, idx) => (
-        <AlertItem key={idx + item.time} info={item} />
+      {info.notifications.map((item: SafetyAlertItemProps) => (
+        <AlertItem key={item.id} info={item} isNew={item.isNew} />
       ))}
     </StyledSafetyAlrertBox>
   );
