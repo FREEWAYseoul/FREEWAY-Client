@@ -8,7 +8,7 @@ const getNotificationData = async () => {
   return res?.data ?? [];
 };
 
-export const useNotification = () => {
+export const useNotifications = () => {
   return useQuery<SafetyAlertProps[]>(['notifications'], getNotificationData, {
     staleTime: 1000 * 60,
     cacheTime: 1000 * 60 * 5,

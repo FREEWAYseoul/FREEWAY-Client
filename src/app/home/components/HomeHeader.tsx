@@ -2,26 +2,16 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import styled from 'styled-components';
 
-import NotiIcon from '@/assets/icons/bell.svg';
+import NewNotiIcon from '@/assets/icons/bell.svg';
 import SettingIcon from '@/assets/icons/gear.svg';
+import NotiIcon from '@/assets/icons/noti-icon.svg';
 import Button from '@/common/components/button/Button';
 import ToastMessage from '@/common/components/toast/ToastMessage';
 import useToast from '@/common/hooks/useToast';
 
-const HeaderIcons = [
-  {
-    component: <NotiIcon />,
-    path: '/notification',
-  },
-  {
-    component: <SettingIcon />,
-    path: '/setting',
-  },
-];
-
 const HomeHeader = () => {
   const route = useRouter();
-  const { message, isOpen } = useToast();
+  const { message, isOpen, isNewNoti } = useToast();
 
   const handleMoveNotification = () => {
     route.push('/notification');
@@ -31,7 +21,8 @@ const HomeHeader = () => {
    * prefetch
    */
   useEffect(() => {
-    HeaderIcons.forEach((item) => route.prefetch(item.path));
+    route.prefetch('/notification');
+    route.prefetch('/setting');
     route.prefetch('/search');
   }, [route]);
 
@@ -39,11 +30,12 @@ const HomeHeader = () => {
     <>
       <HomePageHeader>
         <ToastMessage content={message} onClick={handleMoveNotification} isOpen={isOpen} />
-        {HeaderIcons.map((item, idx) => (
-          <Button key={idx} height={30} handleOnClick={() => route.push(item.path)}>
-            {item.component}
-          </Button>
-        ))}
+        <Button height={30} handleOnClick={() => route.push('/notification')}>
+          {isNewNoti ? <NewNotiIcon /> : <NotiIcon />}
+        </Button>
+        <Button height={30} handleOnClick={() => route.push('/setting')}>
+          <SettingIcon />
+        </Button>
       </HomePageHeader>
     </>
   );
