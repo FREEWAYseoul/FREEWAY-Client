@@ -3,6 +3,7 @@ export interface SafetyAlertItemProps {
   summary: string;
   content: string;
   time: string;
+  isNew: boolean;
 }
 
 export interface SafetyAlertProps {

@@ -3,13 +3,13 @@ import { useEffect, useRef, useState } from 'react';
 import { SafetyAlertProps } from '@/types/alertType';
 import { nowDateFormat } from '@/utils/format';
 
-import { useNotification } from '../api/notification';
+import { useNotifications } from '../api/notification';
+import { NOTIFICATION_HISTORY } from '../constants/localstorage';
 
 const TOAST_TIMER = 4000;
-const NOTIFICATION_HISTORY = 'notification-history';
 
 const useToast = () => {
-  const { data: notifications, isLoading } = useNotification();
+  const { data: notifications, isLoading } = useNotifications();
   const toastMessage = useRef<string>('');
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isNewNoti, setIsNewNoti] = useState<boolean>(false);
