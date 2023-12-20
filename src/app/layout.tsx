@@ -1,5 +1,4 @@
 import { Metadata } from 'next';
-import localFont from 'next/font/local';
 import { PropsWithChildren } from 'react';
 
 import META_DATA from '@/common/constants/meatadata';
@@ -23,14 +22,16 @@ export const metadata: Metadata = {
   },
 };
 
-const Pretendard = localFont({
-  src: '../../public/fonts/PretendardVariable.woff2',
-});
-
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html>
       <head>
+        <link
+          rel='stylesheet'
+          as='style'
+          href='https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css'
+        />
+
         {/* favicon logo */}
         <link rel='apple-touch-icon' sizes='57x57' href='/favicon-57x57.png' />
         <link rel='apple-touch-icon' sizes='60x60' href='/favicon-60x60.png' />
@@ -58,7 +59,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
         />
         <Ga />
       </head>
-      <body className={Pretendard.className}>
+      <body>
         <Provider>
           <StyledComponentsRegistry>
             <LayoutWrapper>
