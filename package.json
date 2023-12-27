@@ -21,7 +21,8 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-notion": "^0.10.0",
-    "react-speech-recognition": "^3.10.0"
+    "react-speech-recognition": "^3.10.0",
+    "react-zoom-pan-pinch": "^3.3.0"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.4.0",

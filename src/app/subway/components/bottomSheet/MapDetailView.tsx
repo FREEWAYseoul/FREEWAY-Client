@@ -1,3 +1,4 @@
+import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
 import styled, { css } from 'styled-components';
 
 import NotFoundIcon from '@/assets/icons/not-found.svg';
@@ -10,7 +11,11 @@ const MapDetailView = ({ src }: { src: string }) => {
     <StyledMapDetailView>
       {src ? (
         <StyledImageWrapper $tabPosition={230 + position}>
-          <img src={src.replace('http', 'https')} alt='내부지도' width={'100%'} />
+          <TransformWrapper initialScale={1}>
+            <TransformComponent>
+              <img src={src.replace('http', 'https')} alt='내부지도' width={'100%'} />
+            </TransformComponent>
+          </TransformWrapper>
         </StyledImageWrapper>
       ) : (
         <StyledNotFound>
