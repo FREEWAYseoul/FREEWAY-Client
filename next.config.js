@@ -23,7 +23,7 @@ const nextConfig = {
     ];
   },
   images: {
-    domains: ['freeway-seoul.vercel.app'],
+    domains: ['freeway-seoul.vercel.app', 'data.seoul.go.kr'],
   },
 };
 
