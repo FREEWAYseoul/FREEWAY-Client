@@ -6,9 +6,6 @@ import { SLIDER_RANGE } from '@/common/constants/slide';
 
 const MapDetailView = ({ src }: { src: string }) => {
   const position = SLIDER_RANGE.min;
-  const width = window.innerWidth;
-
-  console.log(width);
 
   return (
     <StyledMapDetailView>
