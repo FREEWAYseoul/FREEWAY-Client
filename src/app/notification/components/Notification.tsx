@@ -12,7 +12,11 @@ const Notification = () => {
   return (
     <>
       <PageHeader title='알림' />
-      {!isLoading ? <SafetyContents notifications={newNotifications} /> : <ProgressBar />}
+      {!isLoading && newNotifications.length ? (
+        <SafetyContents notifications={newNotifications} />
+      ) : (
+        <ProgressBar />
+      )}
     </>
   );
 };

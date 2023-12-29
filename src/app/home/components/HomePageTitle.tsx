@@ -1,3 +1,6 @@
+'use client';
+
+import React from 'react';
 import styled from 'styled-components';
 
 const HomePageTitle = () => {
@@ -9,7 +12,7 @@ const HomePageTitle = () => {
   );
 };
 
-export default HomePageTitle;
+export default React.memo(HomePageTitle);
 
 const StyledHomePageTitleWrapper = styled.div`
   display: flex;

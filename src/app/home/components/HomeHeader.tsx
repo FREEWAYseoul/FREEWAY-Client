@@ -1,5 +1,5 @@
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import NewNotiIcon from '@/assets/icons/bell.svg';
@@ -41,7 +41,7 @@ const HomeHeader = () => {
   );
 };
 
-export default HomeHeader;
+export default React.memo(HomeHeader);
 
 const HomePageHeader = styled.div`
   position: relative;

@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import React from 'react';
 import styled from 'styled-components';
 
 import BackArrowIcon from '@/assets/icons/back-arrow.svg';
@@ -24,7 +25,7 @@ const PageHeader = ({ title }: Props) => {
   );
 };
 
-export default PageHeader;
+export default React.memo(PageHeader);
 
 const StyledHeader = styled.div`
   display: flex;
