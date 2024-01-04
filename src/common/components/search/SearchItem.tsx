@@ -2,8 +2,6 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 
-import useStationSearch from '@/app/search/hooks/useStationSearch';
-
 import { convertStationIdToSVG, modifyStatus } from '../../../utils/station';
 
 type SearchItemProps = {
@@ -14,22 +12,31 @@ type SearchItemProps = {
   isFocus?: boolean;
   type?: 'homepage' | 'searchpage';
   keyword: string;
+  handleSaveStation: (stationId: string) => void;
 };
 
 type StyledStatusProps = {
   $status: string;
 };
 
-const SearchItem = ({ name, status, id, line, isFocus, type, keyword }: SearchItemProps) => {
+const SearchItem = ({
+  name,
+  status,
+  id,
+  line,
+  isFocus,
+  type,
+  keyword,
+  handleSaveStation,
+}: SearchItemProps) => {
   const route = useRouter();
   const [svg, setSVG] = useState(null);
-  const { saveStation } = useStationSearch();
 
   const handleClick = (
     e: React.MouseEvent<HTMLLIElement, MouseEvent> | React.KeyboardEvent<HTMLLIElement>,
   ) => {
     const selectedStationId = e.currentTarget.id;
-    saveStation(selectedStationId);
+    handleSaveStation(selectedStationId);
     route.push('/subway');
   };
 

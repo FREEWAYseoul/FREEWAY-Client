@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import styled, { css } from 'styled-components';
 
+import useStationSearch from '@/app/search/hooks/useStationSearch';
 import { SearchContext } from '@/common/context/SearchContext';
 import { StationProps } from '@/types/stationType';
 
@@ -14,6 +15,7 @@ type Props = {
 
 const SearchList = ({ label, data, type }: Props) => {
   const { autofillRef, selectedIdx, keyword } = useContext(SearchContext);
+  const { saveStation } = useStationSearch();
 
   return (
     <>
@@ -29,6 +31,7 @@ const SearchList = ({ label, data, type }: Props) => {
             isFocus={selectedIdx === idx ? true : false}
             type={type}
             keyword={keyword}
+            handleSaveStation={saveStation}
           />
         ))}
       </StyledListWrapper>
